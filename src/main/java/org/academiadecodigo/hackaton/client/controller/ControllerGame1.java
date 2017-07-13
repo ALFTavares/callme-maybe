@@ -45,9 +45,8 @@ public class ControllerGame1 extends Controller implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
         addPlayer();
-        coinAnimation(0.9);
+        coinAnimation(0.7);
     }
 
     private void addPlayer() {
