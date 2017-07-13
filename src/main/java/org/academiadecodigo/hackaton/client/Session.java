@@ -1,4 +1,4 @@
-package client;
+package org.academiadecodigo.hackaton.client;
 
 import java.io.BufferedReader;
 import java.io.IOException;
