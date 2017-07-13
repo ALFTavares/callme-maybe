@@ -1,6 +1,8 @@
 package org.academiadecodigo.hackaton.server;
 
 
+import org.academiadecodigo.hackaton.client.Navigation;
+import org.academiadecodigo.hackaton.client.controller.ControllerGame1;
 import org.academiadecodigo.hackaton.shared.Message;
 import org.academiadecodigo.hackaton.shared.Type;
 import org.academiadecodigo.hackaton.shared.Values;

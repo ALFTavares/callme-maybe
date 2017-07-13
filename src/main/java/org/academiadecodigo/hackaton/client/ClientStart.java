@@ -4,7 +4,7 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 import org.academiadecodigo.hackaton.client.service.ServiceLocator;
 import org.academiadecodigo.hackaton.client.service.game.GameService;
-import org.academiadecodigo.hackaton.client.service.game.GameServiceImpl;
+import org.academiadecodigo.hackaton.client.service.game.GameService1;
 import org.academiadecodigo.hackaton.client.service.login.LoginServiceImpl;
 
 /**
@@ -21,8 +21,9 @@ public class ClientStart extends Application {
     @Override
     public void init() throws Exception {
 
+
         ServiceLocator.getInstance().add(new LoginServiceImpl());
-        ServiceLocator.getInstance().add(new GameServiceImpl());
+        ServiceLocator.getInstance().add(new GameService1());
 
     }
 

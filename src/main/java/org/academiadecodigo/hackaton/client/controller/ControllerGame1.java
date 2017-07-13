@@ -13,6 +13,12 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
+import org.academiadecodigo.hackaton.client.Session;
+import org.academiadecodigo.hackaton.client.service.Service;
+import org.academiadecodigo.hackaton.client.service.ServiceLocator;
+import org.academiadecodigo.hackaton.client.service.game.GameService;
+import org.academiadecodigo.hackaton.shared.Message;
+import org.academiadecodigo.hackaton.shared.Type;
 import sun.security.krb5.SCDynamicStoreConfig;
 
 import java.net.URL;
@@ -24,6 +30,8 @@ import java.util.*;
 public class ControllerGame1 extends Controller implements Initializable {
 
     private int coins;
+
+    private GameService gameService;
 
     @FXML
     private Pane bgPane;
@@ -51,14 +59,17 @@ public class ControllerGame1 extends Controller implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         progressBar.setProgress(1);
 
+        gameService = ServiceLocator.getInstance().get(GameService.class);
+        gameService.setController(this);
 
-       Thread thread= new Thread(new Runnable() {
+
+        Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
 
                 boolean upDown = false;
 
-                while (true){
+                while (true) {
 
                     try {
                         Thread.sleep(5);
@@ -66,17 +77,17 @@ public class ControllerGame1 extends Controller implements Initializable {
                         e.printStackTrace();
                     }
 
-                    if (progressBar.getProgress() >= 1){
+                    if (progressBar.getProgress() >= 1) {
                         upDown = true;
                     }
-                    if (progressBar.getProgress() <= 0.01){
+                    if (progressBar.getProgress() <= 0.01) {
                         upDown = false;
                     }
 
-                    if (!upDown){
+                    if (!upDown) {
                         progressBar.setProgress(progressBar.getProgress() + 0.01);
                     }
-                    if (upDown){
+                    if (upDown) {
                         progressBar.setProgress(progressBar.getProgress() - 0.01);
                     }
 
@@ -87,37 +98,51 @@ public class ControllerGame1 extends Controller implements Initializable {
             }
         });
 
-       thread.start();
+        Thread thread2 = new Thread(new Runnable() {
+            @Override
+            public void run() {
 
-        addPlayer();
-        coinAnimation(0.9);
+
+                Message message = Session.getInstance().read();
+
+                gameService.processMsg(message.getType(), message.getContent());
+
+            }
+        });
+
+        thread2.start();
+
+        thread.start();
+
+        addPlayer(3, 6, 1);
+        addPlayer(6, 6, 2);
 
         bgPane.requestFocus();
         progressBar.requestFocus();
         System.out.println(progressBar.isFocused());
     }
 
-    private void addPlayer() {
+    private void addPlayer(int col, int row, int player) {
         playerImage = new Image("/images/profile1.png");
         playerView = new ImageView();
         playerView.setImage(playerImage);
         playerView.setFitWidth(50);
         playerView.setPreserveRatio(true);
 
-        players.put(1, playerView);
+        players.put(player, playerView);
 
-        gridPane.add(playerView, 3, 6);
+        gridPane.add(playerView, col, row);
     }
 
-    private void coinAnimation(double value) {
+    public void coinAnimation(double value, int player) {
 
         coinImage = new Image("/images/coin.png");
         coinView = new ImageView();
         coinView.setImage(coinImage);
         coinView.setFitWidth(50);
         coinView.setPreserveRatio(true);
-        int playerRow = gridPane.getRowIndex(players.get(1));
-        int playerColumn = gridPane.getColumnIndex(players.get(1));
+        int playerRow = gridPane.getRowIndex(players.get(player));
+        int playerColumn = gridPane.getColumnIndex(players.get(player));
         gridPane.add(coinView, playerColumn, playerRow);
         double finalValue = value * 500;
         TranslateTransition tt = new TranslateTransition(Duration.millis(1000), coinView);
@@ -131,22 +156,22 @@ public class ControllerGame1 extends Controller implements Initializable {
     @FXML
     public void onKeyPressed(KeyEvent event) {
 
-        switch (event.getCode()){
+        switch (event.getCode()) {
 
             case SPACE:
-                coinAnimation(progressBar.getProgress());
+                coinAnimation(progressBar.getProgress(), 1);
                 System.out.println(progressBar.getProgress());
-                if (progressBar.getProgress() >= 0.7 && progressBar.getProgress() <= 0.9){
-                coins++;
+                if (progressBar.getProgress() >= 0.7 && progressBar.getProgress() <= 0.9) {
+                    coins++;
                 }
                 coinsValue.setText(String.valueOf(coins));
+
+                Session.getInstance().write(new Message(Type.COMUNICATION_LVL1, String.valueOf(progressBar.getProgress())));
+
+
         }
 
 
     }
-
-
-
-
 
 }

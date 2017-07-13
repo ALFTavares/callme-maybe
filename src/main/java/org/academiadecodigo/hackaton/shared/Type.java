@@ -9,6 +9,7 @@ public enum Type {
 
     LOGIN,
     SUCCESS,
-    ERROR
+    ERROR,
+    COMUNICATION_LVL1
 
 }

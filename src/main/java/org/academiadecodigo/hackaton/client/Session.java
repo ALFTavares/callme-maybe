@@ -1,6 +1,9 @@
 package org.academiadecodigo.hackaton.client;
 
+import org.academiadecodigo.hackaton.client.controller.ControllerGame1;
+import org.academiadecodigo.hackaton.client.service.game.GameService;
 import org.academiadecodigo.hackaton.shared.Message;
+import org.academiadecodigo.hackaton.shared.Type;
 
 import java.io.*;
 import java.net.Socket;
@@ -18,6 +21,7 @@ public class Session {
     private Socket socket;
     private ObjectOutputStream out;
     private ObjectInputStream in;
+    private GameService gameService;
 
     private Session() {
         connect();
@@ -91,8 +95,15 @@ public class Session {
 
     }
 
+
+    public void setGameService(GameService gameService) {
+        this.gameService = gameService;
+    }
+
     public void setUsername(String username) {
         this.username = username;
     }
+
+
 
 }
