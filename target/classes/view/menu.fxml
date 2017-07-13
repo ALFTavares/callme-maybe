@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+
+
+<Pane fx:id="menuPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.academiadecodigo.hackaton.client.controller.ControllerMenu">
+   <children>
+      <VBox alignment="CENTER" layoutX="217.0" layoutY="192.0">
+         <children>
+            <Text fx:id="userText" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="clientName" text="Escolha o seu User" textAlignment="CENTER" />
+            <TextField fx:id="inputText" styleClass="inputBox" />
+            <Text fx:id="errorText" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+            <Button fx:id="submitBtn" mnemonicParsing="false" onAction="#submitToServer" text="Button" />
+         </children>
+      </VBox>
+   </children>
+</Pane>

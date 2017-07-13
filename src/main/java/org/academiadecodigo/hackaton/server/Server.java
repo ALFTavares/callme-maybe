@@ -76,4 +76,12 @@ public class Server {
         //TODO change the method name in persistenceHandler after creation
         //persistenceHandler.sendForQuery(message);
     }
+
+    public Map getSocketMap() {
+        return socketMap;
+    }
+
+    public boolean checkName(String msg) {
+        return socketMap.containsKey(msg);
+    }
 }
