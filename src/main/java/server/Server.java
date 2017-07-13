@@ -19,14 +19,13 @@ public class Server {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        clientHandler = new ClientHandler(this);
         persistenceHandler = new PersistenceHandler(this);
     }
 
     public void start() throws IOException {
         while (true) {
             socket = serverSocket.accept();
-            new Thread(new ClientHandler(this));
+            new Thread(new ClientHandler(this, socket));
         }
     }
 
