@@ -8,7 +8,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Text?>
 
-<Pane fx:id="bgPane" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.academiadecodigo.hackaton.client.controller.ControllerGame1">
+<Pane fx:id="bgPane" onKeyPressed="#onKeyPressed" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.academiadecodigo.hackaton.client.controller.ControllerGame1">
    <children>
       <GridPane fx:id="gridPane" prefHeight="600.0" prefWidth="800.0">
          <columnConstraints>

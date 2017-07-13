@@ -3,6 +3,8 @@ package org.academiadecodigo.hackaton.client;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import org.academiadecodigo.hackaton.client.service.ServiceLocator;
+import org.academiadecodigo.hackaton.client.service.game.GameService;
+import org.academiadecodigo.hackaton.client.service.game.GameServiceImpl;
 import org.academiadecodigo.hackaton.client.service.login.LoginServiceImpl;
 
 /**
@@ -20,6 +22,7 @@ public class ClientStart extends Application {
     public void init() throws Exception {
 
         ServiceLocator.getInstance().add(new LoginServiceImpl());
+        ServiceLocator.getInstance().add(new GameServiceImpl());
 
     }
 
@@ -32,7 +35,7 @@ public class ClientStart extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         Navigation.getInstance().setStage(primaryStage);
-        Navigation.getInstance().loadScreen("menu");
+        Navigation.getInstance().loadScreen("game1");
 
     }
 
