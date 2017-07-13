@@ -27,8 +27,9 @@
          <children>
             <Text fx:id="userText" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="clientName" text="Choose your username" textAlignment="CENTER" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
             <TextField fx:id="inputText" styleClass="inputBox" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
-            <Button fx:id="submitBtn" mnemonicParsing="false" onAction="#submitToServer" text="Start" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+            <Button fx:id="submitBtn" mnemonicParsing="false" onAction="#submitToServer" text="Start" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
             <Text fx:id="errorText" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
+            <Button mnemonicParsing="false" onAction="#onCheckHighScore" text="HighScores" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
          </children>
       </GridPane>
    </children>
