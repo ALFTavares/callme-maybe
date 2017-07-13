@@ -1,10 +1,8 @@
 package org.academiadecodigo.hackaton.server;
 
-
 import org.academiadecodigo.hackaton.shared.Message;
 import org.academiadecodigo.hackaton.shared.Type;
 import org.academiadecodigo.hackaton.shared.Values;
-import sun.awt.SunHints;
 
 import java.io.*;
 import java.net.Socket;
@@ -28,7 +26,6 @@ public class ClientHandler implements Runnable {
         }
     }
 
-
     //loop waiting for instructions
     public void run() {
 
@@ -36,7 +33,7 @@ public class ClientHandler implements Runnable {
 
         try {
             ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
-            Message message;
+            Message<String> message;
 
             while (true) {
                 try {
@@ -55,7 +52,6 @@ public class ClientHandler implements Runnable {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
     //process the msg received and send back msg to client
@@ -65,16 +61,20 @@ public class ClientHandler implements Runnable {
             case LOGIN:
 
                 if (server.checkName(msg)) {
-                    writeMessage(new Message(Type.LOGIN, Values.UNSUCCESS));
+                    writeMessage(new Message<String>(Type.LOGIN, Values.UNSUCCESS));
                     return;
                 }
 
-                writeMessage(new Message(Type.LOGIN, Values.SUCCESS));
+                writeMessage(new Message<String>(Type.LOGIN, Values.SUCCESS));
                 server.addToMap(msg, socket);
                 break;
 
             case SCORELIST:
-                writeMessage(new Message(Type.SCORELIST, server.persistenceList()));
+                writeMessage(new Message<List>(Type.SCORELIST, server.persistenceList()));
+                break;
+
+            case BEGIN:
+                writeMessage(new Message<String>(Type.BEGIN, Values.BEGIN));
                 break;
         }
         //TODO rest of the process message
@@ -86,5 +86,9 @@ public class ClientHandler implements Runnable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void launchGame() {
+        processMsg(Type.BEGIN, "Here's my number");
     }
 }

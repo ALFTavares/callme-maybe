@@ -20,7 +20,7 @@ public class HibernateSessionManager {
         try {
             // Hold services needed by Hibernate
             ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
-                    .configure("hibernate.cfg.xml") // Load settings from hibernate.cfg.xml
+                    .configure("persistence/hibernate.cfg.xml") // Load settings from hibernate.cfg.xml
                     .build();
 
             sessionFactory = new MetadataSources(serviceRegistry)

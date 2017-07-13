@@ -10,6 +10,7 @@ public enum Type {
     LOGIN,
     SUCCESS,
     ERROR,
-    SCORELIST
+    SCORELIST,
+    BEGIN
 
 }
