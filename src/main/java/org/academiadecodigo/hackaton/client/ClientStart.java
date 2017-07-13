@@ -11,7 +11,7 @@ import javafx.stage.Stage;
 public class ClientStart extends Application {
 
     public static void main(String[] args) {
-
+        launch(args);
     }
 
     @Override
@@ -27,8 +27,8 @@ public class ClientStart extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-
         Navigation.getInstance().setStage(primaryStage);
+        Navigation.getInstance().loadScreen("menu");
 
     }
 
