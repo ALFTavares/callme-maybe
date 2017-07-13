@@ -1,9 +1,8 @@
 package org.academiadecodigo.hackaton.client;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import org.academiadecodigo.hackaton.shared.Message;
+
+import java.io.*;
 import java.net.Socket;
 
 /**
@@ -17,8 +16,8 @@ public class Session {
 
     private String username;
     private Socket socket;
-    private PrintWriter out;
-    private BufferedReader in;
+    private ObjectOutputStream out;
+    private ObjectInputStream in;
 
     private Session() {
         connect();
@@ -29,8 +28,8 @@ public class Session {
         try {
 
             socket = new Socket("localhost", 1234);
-            out = new PrintWriter(socket.getOutputStream(), true);
-            in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            out = new ObjectOutputStream(socket.getOutputStream());
+            in = new ObjectInputStream(socket.getInputStream());
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -38,20 +37,25 @@ public class Session {
 
     }
 
-    public void write(String message) {
-        out.println(message);
+    public void write(Message message) {
+        try {
+            out.writeObject(message);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
-    public String read() {
+    public Message read() {
 
-        String message;
+        Message message = null;
 
         try {
 
-            message = in.readLine();
+            message = (Message) in.readObject();
 
         } catch (IOException e) {
-            message = null;
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
 
