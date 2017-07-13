@@ -46,12 +46,6 @@ public class ServiceLocator {
 
     }
 
-    public void remove(Class<? extends Service> type) {
-
-        services.remove(type.getSimpleName());
-
-    }
-
     public <T extends Service> T get(Class<T> type) {
 
         Service service = services.get(type.getSimpleName());
