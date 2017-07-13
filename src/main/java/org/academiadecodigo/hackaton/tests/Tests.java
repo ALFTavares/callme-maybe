@@ -4,6 +4,10 @@ import org.academiadecodigo.hackaton.client.Session;
 import org.academiadecodigo.hackaton.shared.Message;
 import org.academiadecodigo.hackaton.shared.Type;
 
+import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  * @author by André Martins <Code Cadet>
  *         Project stalkers (13/07/17)
@@ -13,11 +17,21 @@ public class Tests {
 
     public static void main(String[] args) {
 
-        Message message = new Message(Type.LOGIN, "Hello");
+        Scanner scanner = new Scanner(System.in);
 
-        message.getType();
+        String msg;
+        while (!(msg = scanner.nextLine()).equals("exit")) {
 
-        message.getContent();
+            System.out.println(msg);
+
+            Pattern pattern = Pattern.compile("[\\w]+");
+            Matcher matcher = pattern.matcher(msg);
+
+            if (matcher.matches()) {
+                System.out.println("ok");
+            }
+
+        }
 
     }
 
