@@ -35,10 +35,11 @@ public class ClientHandler implements Runnable {
 
         try {
             ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
+            Message message;
 
             while (true) {
                 try {
-                    Message message = (Message) in.readObject();
+                    message = (Message) in.readObject();
 
                     System.out.println(message.getType());
                     System.out.println(message.getContent());
