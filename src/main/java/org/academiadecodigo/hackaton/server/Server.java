@@ -27,7 +27,9 @@ public class Server {
     public void start() throws IOException {
         while (true) {
             Socket socket = serverSocket.accept();
-            new Thread(new ClientHandler(this, socket));
+            new Thread(new ClientHandler(this, socket)).start();
+
+
             //TODO add to map later after we receive player name
         }
     }
@@ -37,6 +39,10 @@ public class Server {
     }
 
     public void sendTo() {
+
+    }
+
+    public void addToMap(String string, Socket socket) {
 
     }
 }
