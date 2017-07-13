@@ -1,6 +1,5 @@
 package client;
 
-import com.sun.org.glassfish.gmbal.IncludeSubclass;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
@@ -13,37 +12,24 @@ import java.util.LinkedList;
 import java.util.Map;
 
 /**
- * @author by André Martins <Code Cadet>
- *         Project stalkers (13/07/17)
- *         <Academia de Código_>
+ * Created by codecadet on 23/06/17.
  */
-public class Navigation {
+public final class Nv {
 
-    private static Navigation instance = null;
+    private static Nv instance = null;
     private LinkedList<Scene> scenes = new LinkedList<Scene>();
     private Map<String, Initializable> controllers = new HashMap<>();
     private Stage stage;
 
-    private Navigation() {
+    private Nv() {
 
     }
 
-    public synchronized static Navigation getInstance() {
-
+    public synchronized static Nv getInstance() {
         if (instance == null) {
-
-            synchronized (Navigation.class) {
-
-                if (instance == null) {
-                    instance = new Navigation();
-                }
-
-            }
-
+            instance = new Nv();
         }
-
         return instance;
-
     }
 
     public void setStage(Stage stage) {
@@ -85,5 +71,4 @@ public class Navigation {
     public void close() {
         stage.close();
     }
-
 }
