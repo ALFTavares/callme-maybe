@@ -1,14 +1,12 @@
 package org.academiadecodigo.hackaton.server;
 
 
-
 import org.academiadecodigo.hackaton.shared.Message;
 import org.academiadecodigo.hackaton.shared.Type;
+import org.academiadecodigo.hackaton.shared.Values;
+import sun.awt.SunHints;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.ObjectInputStream;
+import java.io.*;
 import java.net.Socket;
 
 /**
@@ -17,10 +15,16 @@ import java.net.Socket;
 public class ClientHandler implements Runnable {
     private Server server;
     private Socket socket;
+    private ObjectOutputStream out;
 
     public ClientHandler(Server server, Socket socket) {
         this.server = server;
-        this.socket =  socket;
+        this.socket = socket;
+        try {
+            out = new ObjectOutputStream(socket.getOutputStream());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -30,20 +34,21 @@ public class ClientHandler implements Runnable {
         System.out.println("aqui");
 
         try {
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
 
-            try {
-                Message message = (Message) in.readObject();
+            while (true) {
+                try {
+                    Message message = (Message) in.readObject();
 
-                processMsg(message.getType(), message.getContent());
+                    System.out.println(message.getType());
+                    System.out.println(message.getContent());
 
-                System.out.println(bufferedReader.readLine());
+                    processMsg(message.getType(), message.getContent());
 
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
             }
-
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -54,13 +59,26 @@ public class ClientHandler implements Runnable {
     //process the msg received
     private void processMsg(Type type, String msg) {
 
-       switch (type){
-           case LOGIN:
-               server.addToMap(msg, socket);
+        switch (type) {
+            case LOGIN:
 
-       }
+                if (server.checkName(msg)) {
+                    writeMessage(new Message(Type.LOGIN, Values.UNSUCCESS));
+                    return;
+                }
 
+                writeMessage(new Message(Type.LOGIN, Values.SUCCESS));
+                server.addToMap(msg, socket);
+        }
         //TODO rest of the process message
 
+    }
+
+    private void writeMessage(Message message) {
+        try {
+            out.writeObject(message);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

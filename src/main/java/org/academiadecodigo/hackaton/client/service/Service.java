@@ -1,14 +1,12 @@
-package org.academiadecodigo.hackaton.shared;
+package org.academiadecodigo.hackaton.client.service;
 
 /**
  * @author by André Martins <Code Cadet>
  *         Project stalkers (13/07/17)
  *         <Academia de Código_>
  */
-public enum Type {
+public interface Service {
 
-    LOGIN,
-    SUCCESS,
-    ERROR
+    String getName();
 
 }
