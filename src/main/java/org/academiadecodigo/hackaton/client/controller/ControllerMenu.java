@@ -8,6 +8,7 @@ import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
+import org.academiadecodigo.hackaton.client.Navigation;
 import org.academiadecodigo.hackaton.client.service.ServiceLocator;
 import org.academiadecodigo.hackaton.client.service.login.LoginService;
 
@@ -61,6 +62,11 @@ public class ControllerMenu extends Controller {
         } catch (IllegalArgumentException e) {
             errorText.setText(e.getMessage());
         }
+    }
+
+    @FXML
+    void onCheckHighScore(ActionEvent event) {
+        Navigation.getInstance().loadScreen("high-score");
     }
 
 }
