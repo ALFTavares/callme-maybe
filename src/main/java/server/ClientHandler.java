@@ -1,8 +1,11 @@
 package server;
 
+import sun.plugin2.message.Message;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
 import java.net.Socket;
 
 /**
@@ -22,11 +25,11 @@ public class ClientHandler implements Runnable {
     public void run() {
 
         try {
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
 
-            String msg = bufferedReader.readLine();
 
-            processMsg(msg);
+
+            processMsg();
 
         } catch (IOException e) {
             e.printStackTrace();
