@@ -1,5 +1,6 @@
 package org.academiadecodigo.hackaton.client.controller;
 
+import javafx.fxml.Initializable;
 import javafx.stage.Stage;
 
 /**
@@ -7,7 +8,7 @@ import javafx.stage.Stage;
  *         Project stalkers (13/07/17)
  *         <Academia de Código_>
  */
-public abstract class Controller {
+public abstract class Controller implements Initializable {
 
     private Stage stage;
 
