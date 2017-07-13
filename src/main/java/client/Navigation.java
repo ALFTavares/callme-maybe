@@ -1,5 +1,6 @@
 package client;
 
+import client.controller.Controller;
 import com.sun.org.glassfish.gmbal.IncludeSubclass;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -21,11 +22,10 @@ public class Navigation {
 
     private static Navigation instance = null;
     private LinkedList<Scene> scenes = new LinkedList<Scene>();
-    private Map<String, Initializable> controllers = new HashMap<>();
+    private Map<String, Controller> controllers = new HashMap<>();
     private Stage stage;
 
     private Navigation() {
-
     }
 
     public synchronized static Navigation getInstance() {
@@ -51,20 +51,25 @@ public class Navigation {
     }
 
     public void loadScreen(String view) {
-        try {
-            FXMLLoader loader;
-            loader = new FXMLLoader(getClass().getResource( "/view/" + view + ".fxml"));
-            Parent root = loader.load(); //load the view, instantiate the controller, call initialize
 
-            controllers.put(view, loader.<Initializable>getController());
+        try {
+
+            FXMLLoader loader;
+            loader = new FXMLLoader(getClass().getResource("/view/" + view + ".fxml"));
+            Parent root = loader.load(); // load the view, instantiate the controller, call initialize
+
+            controllers.put(view, loader.<Controller>getController());
+            controllers.get(view).setStage(stage);
 
             Scene scene = new Scene(root);
             scenes.push(scene);
 
             setScene(scene);
+
         } catch (IOException e) {
             System.out.println("Failure to load view " + view);
         }
+
     }
 
     public void setScene(Scene scene) {
@@ -73,13 +78,14 @@ public class Navigation {
     }
 
     public void back() {
+
         if (scenes.size() == 1) {
             return;
         }
 
         scenes.pop();
-
         setScene(scenes.peek());
+
     }
 
     public void close() {
