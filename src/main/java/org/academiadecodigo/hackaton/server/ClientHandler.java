@@ -1,6 +1,9 @@
 package org.academiadecodigo.hackaton.server;
 
-import sun.plugin2.message.Message;
+
+
+import org.academiadecodigo.hackaton.shared.Message;
+import org.academiadecodigo.hackaton.shared.Type;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -24,12 +27,23 @@ public class ClientHandler implements Runnable {
     //loop waiting for instructions
     public void run() {
 
+        System.out.println("aqui");
+
         try {
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
 
+            try {
+                Message message = (Message) in.readObject();
 
+                processMsg(message.getType(), message.getContent());
 
-            processMsg();
+                System.out.println(bufferedReader.readLine());
+
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -38,11 +52,13 @@ public class ClientHandler implements Runnable {
     }
 
     //process the msg received
-    private void processMsg(String msg) {
+    private void processMsg(Type type, String msg) {
 
-        if (msg.split(" ")[0].equals("username")){
-            server.addToMap(msg.split(" ")[1], socket);
-        }
+       switch (type){
+           case LOGIN:
+               server.addToMap(msg, socket);
+
+       }
 
         //TODO rest of the process message
 
