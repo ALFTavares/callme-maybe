@@ -9,6 +9,7 @@ public enum Type {
 
     LOGIN,
     SUCCESS,
-    ERROR
+    ERROR,
+    SCORELIST
 
 }

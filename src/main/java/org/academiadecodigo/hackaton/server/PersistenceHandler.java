@@ -40,18 +40,6 @@ public class PersistenceHandler {
         } catch (HibernateException e) {
             HibernateSessionManager.getInstance().rollBackTransaction();
         }
-
-
-        /*try {
-            Session session = HibernateSessionManager.getInstance().beginTransaction();
-
-
-            session.save(score);
-            HibernateSessionManager.getInstance().commitTransaction();
-        } catch (HibernateException e) {
-            HibernateSessionManager.getInstance().rollBackTransaction();
-        }*/
-
     }
 
 

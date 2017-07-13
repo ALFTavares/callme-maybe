@@ -1,6 +1,7 @@
 package org.academiadecodigo.hackaton.shared;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * @author by André Martins <Code Cadet>
@@ -13,10 +14,16 @@ public class Message implements Serializable {
 
     private Type type;
     private String content;
+    private List list;
 
     public Message(Type type, String content) {
         this.type = type;
         this.content = content;
+    }
+
+    public Message(Type type, List list) {
+        this.type = type;
+        this.list = list;
     }
 
     public Type getType() {

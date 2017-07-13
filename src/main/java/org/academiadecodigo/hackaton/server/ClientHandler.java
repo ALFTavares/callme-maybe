@@ -8,6 +8,7 @@ import sun.awt.SunHints;
 
 import java.io.*;
 import java.net.Socket;
+import java.util.List;
 
 /**
  * Created by bob on 13-07-2017.
@@ -57,7 +58,7 @@ public class ClientHandler implements Runnable {
 
     }
 
-    //process the msg received
+    //process the msg received and send back msg to client
     private void processMsg(Type type, String msg) {
 
         switch (type) {
@@ -70,9 +71,13 @@ public class ClientHandler implements Runnable {
 
                 writeMessage(new Message(Type.LOGIN, Values.SUCCESS));
                 server.addToMap(msg, socket);
+                break;
+
+            case SCORELIST:
+                writeMessage(new Message(Type.SCORELIST, server.persistenceList()));
+                break;
         }
         //TODO rest of the process message
-
     }
 
     private void writeMessage(Message message) {
