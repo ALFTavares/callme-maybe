@@ -2,21 +2,22 @@ package org.academiadecodigo.hackaton.client.controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
-import org.academiadecodigo.hackaton.client.Navigation;
+import org.academiadecodigo.hackaton.client.service.ServiceLocator;
+import org.academiadecodigo.hackaton.client.service.login.LoginService;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by codecadet on 13/07/17.
  */
-public class ControllerMenu extends Controller implements Initializable {
+public class ControllerMenu extends Controller {
     @FXML
     private Pane menuPane;
 
@@ -32,23 +33,32 @@ public class ControllerMenu extends Controller implements Initializable {
     @FXML
     private Button submitBtn;
 
-    @FXML
-    private ProgressBar progressBar;
-
-    private String userName;
+    private LoginService loginService;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        System.out.println(menuPane.getPrefWidth());
+        loginService = ServiceLocator.getInstance().<LoginService>get(LoginService.class);
     }
 
     @FXML
     void submitToServer(ActionEvent event) {
-        userName = inputText.getText();
 
-        userText.setText("Your player name is: " + userName);
+        String username = inputText.getText();
+        Pattern pattern = Pattern.compile("[\\w]+");
+        Matcher matcher = pattern.matcher(username);
 
-        Navigation.getInstance().loadScreen("game1");
+        if (!matcher.matches()) {
+            errorText.setText("Invalid username: only letters and numbers are allowed");
+            return;
+        }
+
+        errorText.setText("");
+
+        try {
+            loginService.submitNewClient(username);
+        } catch (IllegalArgumentException e) {
+            errorText.setText(e.getMessage());
+        }
     }
 
 }
