@@ -32,7 +32,7 @@ public class ClientStart extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         Navigation.getInstance().setStage(primaryStage);
-        Navigation.getInstance().loadScreen("menu");
+        Navigation.getInstance().loadScreen("game1");
 
     }
 

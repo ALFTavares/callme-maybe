@@ -2,18 +2,12 @@ package org.academiadecodigo.hackaton.client.controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
-import org.academiadecodigo.hackaton.client.Navigation;
-import org.academiadecodigo.hackaton.client.Session;
 import org.academiadecodigo.hackaton.client.service.ServiceLocator;
 import org.academiadecodigo.hackaton.client.service.login.LoginService;
-import org.academiadecodigo.hackaton.client.service.login.LoginServiceImpl;
-import org.academiadecodigo.hackaton.shared.Message;
-import org.academiadecodigo.hackaton.shared.Type;
 
 import java.net.URL;
 import java.util.ResourceBundle;

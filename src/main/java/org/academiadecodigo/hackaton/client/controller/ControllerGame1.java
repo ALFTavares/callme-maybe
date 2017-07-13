@@ -2,7 +2,9 @@ package org.academiadecodigo.hackaton.client.controller;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.layout.HBox;
+import javafx.scene.control.ProgressBar;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 
 import java.net.URL;
@@ -14,14 +16,23 @@ import java.util.ResourceBundle;
 public class ControllerGame1 extends Controller implements Initializable {
 
     @FXML
-    private HBox scoreBox;
+    private Pane bgPane;
+
+    @FXML
+    private GridPane gridPane;
 
     @FXML
     private Text timeText;
 
+    @FXML
+    private ProgressBar progressBar;
+
+    @FXML
+    private Text coinsValue;
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        System.out.println("open");
+
     }
 }
