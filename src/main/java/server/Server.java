@@ -3,6 +3,7 @@ package server;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Map;
 
 /**
  * Created by bob on 13-07-2017.
@@ -11,7 +12,8 @@ public class Server {
     private ClientHandler clientHandler;
     private PersistenceHandler persistenceHandler;
     private ServerSocket serverSocket;
-    private Socket socket;
+    private Map<String, Socket> socketMap;
+
 
     public Server() {
         try {
@@ -24,8 +26,9 @@ public class Server {
 
     public void start() throws IOException {
         while (true) {
-            socket = serverSocket.accept();
+            Socket socket = serverSocket.accept();
             new Thread(new ClientHandler(this, socket));
+            //TODO add to map later after we receive player name
         }
     }
 
@@ -34,6 +37,10 @@ public class Server {
     }
 
     public void sendTo() {
+
+    }
+
+    public void addToMap(String string, Socket socket) {
 
     }
 }

@@ -17,6 +17,8 @@ public class ClientHandler implements Runnable {
         this.socket =  socket;
     }
 
+
+    //loop waiting for instructions
     public void run() {
 
         try {
@@ -32,7 +34,14 @@ public class ClientHandler implements Runnable {
 
     }
 
+    //process the msg received
     private void processMsg(String msg) {
+
+        if (msg.split(" ")[0].equals("username")){
+            server.addToMap(msg.split(" ")[1], socket);
+        }
+
+        //TODO rest of the process message
 
     }
 }
