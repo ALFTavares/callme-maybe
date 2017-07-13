@@ -1,4 +1,4 @@
-package server;
+package org.academiadecodigo.hackaton.server;
 
 import sun.plugin2.message.Message;
 

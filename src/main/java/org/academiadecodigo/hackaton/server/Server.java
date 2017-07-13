@@ -1,4 +1,4 @@
-package server;
+package org.academiadecodigo.hackaton.server;
 
 import java.io.IOException;
 import java.net.ServerSocket;
