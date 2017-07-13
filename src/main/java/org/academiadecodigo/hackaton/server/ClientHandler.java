@@ -40,6 +40,9 @@ public class ClientHandler implements Runnable {
                 try {
                     Message message = (Message) in.readObject();
 
+                    System.out.println(message.getType());
+                    System.out.println(message.getContent());
+
                     processMsg(message.getType(), message.getContent());
 
                 } catch (ClassNotFoundException e) {
@@ -59,10 +62,13 @@ public class ClientHandler implements Runnable {
         switch (type) {
             case LOGIN:
 
-                server.addToMap(msg, socket);
-                if (!server.checkName(msg)) {
-                    writeMessage(new Message(Type.LOGIN, Values.SUCCESS));
+                if (server.checkName(msg)) {
+                    writeMessage(new Message(Type.LOGIN, Values.UNSUCCESS));
+                    return;
                 }
+
+                writeMessage(new Message(Type.LOGIN, Values.SUCCESS));
+                server.addToMap(msg, socket);
         }
         //TODO rest of the process message
 

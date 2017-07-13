@@ -4,6 +4,7 @@ import org.academiadecodigo.hackaton.client.Navigation;
 import org.academiadecodigo.hackaton.client.Session;
 import org.academiadecodigo.hackaton.shared.Message;
 import org.academiadecodigo.hackaton.shared.Type;
+import org.academiadecodigo.hackaton.shared.Values;
 
 /**
  * @author by André Martins <Code Cadet>
@@ -23,7 +24,7 @@ public class LoginServiceImpl implements LoginService {
 
         Message message = Session.getInstance().read();
 
-        if (message.getType().equals(Type.LOGIN) && message.getContent().equals("OK")) {
+        if (message.getType().equals(Type.LOGIN) && message.getContent().equals(Values.SUCCESS)) {
             Navigation.getInstance().loadScreen("game1");
             return;
         }

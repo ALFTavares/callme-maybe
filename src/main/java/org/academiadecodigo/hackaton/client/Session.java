@@ -27,7 +27,7 @@ public class Session {
 
         try {
 
-            socket = new Socket("localhost", 1234);
+            socket = new Socket("localhost", 9999);
             out = new ObjectOutputStream(socket.getOutputStream());
             in = new ObjectInputStream(socket.getInputStream());
 

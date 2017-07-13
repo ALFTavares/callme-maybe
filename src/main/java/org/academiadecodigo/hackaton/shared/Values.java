@@ -5,4 +5,5 @@ package org.academiadecodigo.hackaton.shared;
  */
 public class Values {
     public static final String SUCCESS = "Ok";
+    public static final String UNSUCCESS = "Not ok";
 }
