@@ -1,4 +1,4 @@
-package server;
+package org.academiadecodigo.hackaton.server;
 
 /**
  * Created by bob on 13-07-2017.

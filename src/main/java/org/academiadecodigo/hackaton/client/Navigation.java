@@ -1,9 +1,7 @@
-package client;
+package org.academiadecodigo.hackaton.client;
 
-import client.controller.Controller;
-import com.sun.org.glassfish.gmbal.IncludeSubclass;
+import org.academiadecodigo.hackaton.client.controller.Controller;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;

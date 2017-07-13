@@ -1,10 +1,12 @@
-package client;
+package org.academiadecodigo.hackaton.client;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
 
 /**
- * Created by bob on 13-07-2017.
+ * @author by André Martins <Code Cadet>
+ *         Project stalkers (13/07/17)
+ *         <Academia de Código_>
  */
 public class ClientStart extends Application {
 

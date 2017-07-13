@@ -1,4 +1,4 @@
-package client.controller;
+package org.academiadecodigo.hackaton.client.controller;
 
 import javafx.stage.Stage;
 
