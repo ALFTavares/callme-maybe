@@ -3,7 +3,10 @@ package org.academiadecodigo.hackaton.server;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * Created by bob on 13-07-2017.
@@ -22,14 +25,19 @@ public class Server {
             e.printStackTrace();
         }
         persistenceHandler = new PersistenceHandler(this);
+        socketMap = new HashMap<>();
     }
 
     public void start() throws IOException {
+        ExecutorService executorService = Executors.newCachedThreadPool();
         while (true) {
             Socket socket = serverSocket.accept();
-            new Thread(new ClientHandler(this, socket));
-            //TODO add to map later after we receive player name
+            executorService.submit(new ClientHandler(this, socket));
         }
+    }
+
+    public void addToMap(String name, Socket socket) {
+        socketMap.put(name, socket);
     }
 
     public void sendToAll() {
@@ -38,5 +46,10 @@ public class Server {
 
     public void sendTo() {
 
+    }
+
+    public void getMessageForPersistence(String message) {
+        //TODO change the method name in persistenceHandler after creation
+        persistenceHandler.sendForQuery(message);
     }
 }
