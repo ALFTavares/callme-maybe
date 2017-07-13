@@ -19,11 +19,14 @@ public class ClientStart extends Application {
 
     @Override
     public void stop() throws Exception {
+        Session.getInstance().close();
         Navigation.getInstance().close();
     }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+
+        Navigation.getInstance().setStage(primaryStage);
 
     }
 

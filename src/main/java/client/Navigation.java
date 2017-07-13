@@ -21,6 +21,7 @@ import java.util.Map;
 public class Navigation {
 
     private static Navigation instance = null;
+
     private LinkedList<Scene> scenes = new LinkedList<Scene>();
     private Map<String, Controller> controllers = new HashMap<>();
     private Stage stage;
