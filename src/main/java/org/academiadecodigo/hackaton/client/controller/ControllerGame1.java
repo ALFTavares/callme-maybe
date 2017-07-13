@@ -33,6 +33,45 @@ public class ControllerGame1 extends Controller implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        progressBar.setProgress(1);
+
+       Thread thread= new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+                boolean upDown = false;
+
+                while (true){
+
+                    try {
+                        Thread.sleep(5);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+                    if (progressBar.getProgress() >= 1){
+                        upDown = true;
+                    }
+                    if (progressBar.getProgress() <= 0.01){
+                        upDown = false;
+                    }
+
+                    if (!upDown){
+                        progressBar.setProgress(progressBar.getProgress() + 0.01);
+                    }
+                    if (upDown){
+                        progressBar.setProgress(progressBar.getProgress() - 0.01);
+                    }
+
+
+                }
+            }
+        });
+
+       thread.start();
 
     }
+
+
+
 }

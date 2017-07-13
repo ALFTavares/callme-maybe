@@ -32,9 +32,6 @@ public class ControllerMenu extends Controller implements Initializable {
     @FXML
     private Button submitBtn;
 
-    @FXML
-    private ProgressBar progressBar;
-
     private String userName;
 
     @Override
