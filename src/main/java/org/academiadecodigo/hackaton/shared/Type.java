@@ -7,6 +7,8 @@ package org.academiadecodigo.hackaton.shared;
  */
 public enum Type {
 
-    LOGIN
+    LOGIN,
+    SUCCESS,
+    ERROR
 
 }
