@@ -5,6 +5,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Text?>
 
 <Pane fx:id="bgPane" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.academiadecodigo.hackaton.client.controller.ControllerGame1">
@@ -32,7 +33,9 @@
          <children>
             <Text fx:id="timeText" strokeType="OUTSIDE" strokeWidth="0.0" text="Timer" GridPane.columnIndex="7" />
             <Text fx:id="coinsValue" strokeType="OUTSIDE" strokeWidth="0.0" text="Coins" />
-            <ProgressBar fx:id="progressBar" minHeight="20.0" minWidth="340.0" prefWidth="249.0" progress="0.36" rotate="-90.0" translateX="-120.0" GridPane.rowIndex="3" />
+            <ProgressBar fx:id="progressBar" minHeight="20.0" minWidth="340.0" prefWidth="249.0" progress="0.92" rotate="-90.0" translateX="-120.0" GridPane.rowIndex="3" />
+            <Line endX="-10.0" startX="-100.0" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+            <Line endX="-20.0" startX="-100.0" translateY="39.0" GridPane.rowIndex="1" />
          </children>
       </GridPane>
    </children>
