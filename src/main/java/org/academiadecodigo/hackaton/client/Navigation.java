@@ -65,6 +65,7 @@ public class Navigation {
 
         } catch (IOException e) {
             System.out.println("Failure to load view " + view);
+            e.printStackTrace();
         }
 
     }
