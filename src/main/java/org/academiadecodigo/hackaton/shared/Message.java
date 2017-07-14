@@ -8,29 +8,23 @@ import java.util.List;
  *         Project stalkers (13/07/17)
  *         <Academia de Código_>
  */
-public class Message implements Serializable {
+public class Message<T> implements Serializable {
 
     private static Long serialVersionUID = 10L;
 
     private Type type;
-    private String content;
-    private List list;
+    private T content;
 
-    public Message(Type type, String content) {
+    public Message(Type type, T content) {
         this.type = type;
         this.content = content;
-    }
-
-    public Message(Type type, List list) {
-        this.type = type;
-        this.list = list;
     }
 
     public Type getType() {
         return type;
     }
 
-    public String getContent() {
+    public T getContent() {
         return content;
     }
 

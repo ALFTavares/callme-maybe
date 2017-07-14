@@ -1,12 +1,10 @@
 package org.academiadecodigo.hackaton.server;
 
 import org.hibernate.HibernateException;
-import org.academiadecodigo.hackaton.server.Score;
-import org.academiadecodigo.hackaton.server.Server;
+import org.academiadecodigo.hackaton.shared.Score;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -86,13 +84,12 @@ public class PersistenceHandler {
         return ishigh;
     }
 
-    public List getHighScores() {
-        List list=null;
+    public List<Score> getHighScores() {
+        List<Score> list = null;
         try {
             Session session = HibernateSessionManager.getInstance().beginTransaction();
 
-             Query query = session.createSQLQuery("SELECT * FROM scores");
-             list=query.list();
+            list = (List<Score>) session.createCriteria(Score.class).list();
 
             HibernateSessionManager.getInstance().commitTransaction();
         } catch (HibernateException ex) {

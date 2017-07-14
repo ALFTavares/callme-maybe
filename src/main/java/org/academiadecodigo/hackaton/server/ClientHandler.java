@@ -2,6 +2,7 @@ package org.academiadecodigo.hackaton.server;
 
 
 import org.academiadecodigo.hackaton.shared.Message;
+import org.academiadecodigo.hackaton.shared.Score;
 import org.academiadecodigo.hackaton.shared.Type;
 import org.academiadecodigo.hackaton.shared.Values;
 import sun.awt.SunHints;
@@ -36,7 +37,7 @@ public class ClientHandler implements Runnable {
 
         try {
             ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
-            Message message;
+            Message<String> message;
 
             while (true) {
                 try {
@@ -65,16 +66,16 @@ public class ClientHandler implements Runnable {
             case LOGIN:
 
                 if (server.checkName(msg)) {
-                    writeMessage(new Message(Type.LOGIN, Values.UNSUCCESS));
+                    writeMessage(new Message<String>(Type.LOGIN, Values.UNSUCCESS));
                     return;
                 }
 
-                writeMessage(new Message(Type.LOGIN, Values.SUCCESS));
+                writeMessage(new Message<String>(Type.LOGIN, Values.SUCCESS));
                 server.addToMap(msg, socket);
                 break;
 
             case SCORELIST:
-                writeMessage(new Message(Type.SCORELIST, server.persistenceList()));
+                writeMessage(new Message<List<Score>>(Type.SCORELIST, server.persistenceList()));
                 break;
         }
         //TODO rest of the process message

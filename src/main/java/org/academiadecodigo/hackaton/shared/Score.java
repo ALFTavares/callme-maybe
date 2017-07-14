@@ -1,15 +1,25 @@
-package org.academiadecodigo.hackaton.server;
+package org.academiadecodigo.hackaton.shared;
+
+import java.io.Serializable;
 
 /**
  * Created by bob on 13-07-2017.
  */
-public class Score {
+public class Score implements Serializable {
+
+    private static Long serialVersionUID = 10L;
+
     private String name;
     private int score;
     private long id;
 
     public Score() {
 
+    }
+
+    public Score(String name, int score) {
+        this.name = name;
+        this.score = score;
     }
 
     public String getName() {
@@ -34,5 +44,10 @@ public class Score {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    @Override
+    public String toString() {
+        return name + " - " + score;
     }
 }

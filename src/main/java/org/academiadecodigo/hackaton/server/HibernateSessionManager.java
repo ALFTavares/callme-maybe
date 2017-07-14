@@ -20,7 +20,7 @@ public class HibernateSessionManager {
         try {
             // Hold services needed by Hibernate
             ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
-                    .configure("hibernate.cfg.xml") // Load settings from hibernate.cfg.xml
+                    .configure("persistence/hibernate.cfg.xml") // Load settings from hibernate.cfg.xml
                     .build();
 
             sessionFactory = new MetadataSources(serviceRegistry)
@@ -51,18 +51,15 @@ public class HibernateSessionManager {
         return sessionFactory.getCurrentSession();
     }
 
-
     // Required to stop hibernate and allow the application to terminate
     public void close() {
         sessionFactory.close();
     }
 
-
     public Session beginTransaction() {
         getSession().beginTransaction();
         return getSession();
     }
-
 
     public void commitTransaction() {
         getSession().getTransaction().commit();

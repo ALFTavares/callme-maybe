@@ -22,7 +22,7 @@ public class LoginServiceImpl implements LoginService {
 
         Session.getInstance().write(new Message(Type.LOGIN, username));
 
-        Message message = Session.getInstance().read();
+        Message<String> message = (Message<String>) Session.getInstance().read();
 
         if (message.getType().equals(Type.LOGIN) && message.getContent().equals(Values.SUCCESS)) {
             Navigation.getInstance().loadScreen("game1");

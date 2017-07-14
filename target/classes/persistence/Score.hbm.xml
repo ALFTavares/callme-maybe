@@ -4,14 +4,14 @@
         "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
 
-    <class name="org.academiadecodigo.hackaton.server.Score" table="scores">
+    <class name="org.academiadecodigo.hackaton.shared.Score" table="scores">
 
         <id name="id" column="id" type="long">
             <generator class="identity" />
         </id>
 
         <property name="name" column="username" type="string"/>
-        <property name="score" column="high_score" type="int"/>
+        <property name="score" column="score" type="int"/>
 
     </class>
 

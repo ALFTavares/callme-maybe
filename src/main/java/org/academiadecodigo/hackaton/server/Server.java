@@ -2,6 +2,7 @@ package org.academiadecodigo.hackaton.server;
 
 import com.sun.corba.se.pept.encoding.OutputObject;
 import org.academiadecodigo.hackaton.shared.Message;
+import org.academiadecodigo.hackaton.shared.Score;
 import org.academiadecodigo.hackaton.shared.Type;
 
 import java.io.IOException;
@@ -19,7 +20,6 @@ import java.util.concurrent.Executors;
  * Created by bob on 13-07-2017.
  */
 public class Server {
-    private ClientHandler clientHandler;
     private PersistenceHandler persistenceHandler;
     private ServerSocket serverSocket;
     private Map<String, Socket> socketMap;
@@ -86,7 +86,7 @@ public class Server {
         return socketMap.containsKey(msg);
     }
 
-    public List persistenceList() {
+    public List<Score> persistenceList() {
         return persistenceHandler.getHighScores();
     }
 }

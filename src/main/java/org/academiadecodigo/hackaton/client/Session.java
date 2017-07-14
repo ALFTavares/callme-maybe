@@ -45,13 +45,13 @@ public class Session {
         }
     }
 
-    public Message read() {
+    public Object read() {
 
-        Message message = null;
+        Object message = null;
 
         try {
 
-            message = (Message) in.readObject();
+            message = in.readObject();
 
         } catch (IOException e) {
             e.printStackTrace();
