@@ -12,8 +12,6 @@ public class ServerStart {
         Server server = new Server();
 
         try {
-            PersistenceHandler persistenceHandler = new PersistenceHandler(server);
-            persistenceHandler.updateScore(new Score("Hello", 50));
             server.start();
         } catch (IOException e) {
             e.printStackTrace();

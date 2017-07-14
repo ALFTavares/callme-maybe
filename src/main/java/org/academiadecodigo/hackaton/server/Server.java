@@ -43,7 +43,8 @@ public class Server {
     public void addToMap(String name, Socket socket) {
         socketMap.put(name, socket);
         if (((socketMap.size() % 2) == 0) && socketMap.size() != 0) {
-            clientHandler.launchGame();
+            //clientHandler.launchGame();
+            // TODO fix this
         }
     }
 
