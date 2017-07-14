@@ -50,8 +50,8 @@ public class Server {
             objectOutputStreamMap.put(socket, new ObjectOutputStream(socket.getOutputStream()));
             executorService.submit(new ClientHandler(this, socket));
             players++;
-            start();
         }
+        start();
         System.out.println("have all the players i need!");
     }
 
