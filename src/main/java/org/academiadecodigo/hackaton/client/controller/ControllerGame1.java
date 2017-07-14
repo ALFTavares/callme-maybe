@@ -12,6 +12,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 import org.academiadecodigo.hackaton.client.Navigation;
@@ -92,6 +94,11 @@ public class ControllerGame1 extends Controller implements Initializable {
         final Timer timer = new Timer();
         timer.scheduleAtFixedRate(new Counter(60, timer, timeText), 0, 1000);
         new Thread(new CheckForTimeOut(timer)).start();
+
+        Media media = new Media(getClass().getResource("/sounds/callme.mp3").toString());
+        MediaPlayer mediaPlayer = new MediaPlayer(media);
+        mediaPlayer.setVolume(0.4);
+        mediaPlayer.play();
 
     }
 

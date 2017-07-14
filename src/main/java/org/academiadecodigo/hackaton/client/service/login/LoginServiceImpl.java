@@ -30,10 +30,6 @@ public class LoginServiceImpl implements LoginService {
         Message<String> message = (Message<String>) Session.getInstance().read();
 
         if (message.getType().equals(Type.LOGIN) && message.getContent().equals(Values.SUCCESS)) {
-            Media media = new Media(getClass().getResource("/sounds/callme.mp3").toString());
-            MediaPlayer mediaPlayer = new MediaPlayer(media);
-            mediaPlayer.setVolume(0.4);
-            mediaPlayer.play();
             Navigation.getInstance().loadScreen("game1");
             return;
         }
