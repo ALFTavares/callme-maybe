@@ -62,7 +62,6 @@ public class ControllerMenu extends Controller {
 
     @FXML
     void onRelease(KeyEvent event) {
-        System.out.println("hey");
         userText.setText(inputText.getText());
     }
 

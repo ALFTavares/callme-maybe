@@ -42,3 +42,9 @@
     -fx-border-color: grey;
     -fx-padding: 10px 20px;
 }
+
+.highGridBg{
+    -fx-background-image: url("/images/highScoreBg.jpg");
+    -fx-background-position: center;
+    -fx-background-size: cover;
+}
