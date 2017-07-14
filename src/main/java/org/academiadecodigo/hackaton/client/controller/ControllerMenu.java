@@ -26,8 +26,8 @@ import java.util.regex.Pattern;
  */
 public class ControllerMenu extends Controller {
 
-    boolean help;
-    Message message;
+    private boolean help;
+    private Message message;
 
     @FXML
     private Pane menuPane;
