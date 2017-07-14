@@ -19,7 +19,7 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button fx:id="btn" mnemonicParsing="false" onAction="#restart" text="Button" GridPane.rowIndex="2" />
+            <Button fx:id="btn" mnemonicParsing="false" onAction="#restart" styleClass="btn_exit" text="Button" textAlignment="CENTER" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
          </children>
       </GridPane>
    </children>
