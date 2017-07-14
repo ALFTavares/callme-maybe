@@ -4,6 +4,8 @@ import javafx.animation.PauseTransition;
 import javafx.animation.SequentialTransition;
 import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
@@ -57,6 +59,7 @@ public class ControllerGame1 extends Controller implements Initializable {
 
     private int coins = 0;
     private boolean levelRun;
+    private boolean nextClick;
 
     //Player list
     private Map<Integer, Node> players = new HashMap<>();
@@ -82,13 +85,8 @@ public class ControllerGame1 extends Controller implements Initializable {
             public void run() {
 
                 while (true) {
-
                     Message message = (Message) Session.getInstance().read();
-
-                    if (message == null) {
-                        continue;
-                    }
-
+                    gameService.processMsg(message.getType(), (String) message.getContent());
                 }
 
             }
@@ -104,9 +102,6 @@ public class ControllerGame1 extends Controller implements Initializable {
         final Timer timer = new Timer();
         timer.scheduleAtFixedRate(new Counter(60, timer, timeText), 0, 1000);
         new Thread(new CheckForTimeOut(timer)).start();
-
-        AudioClip audioClip=new AudioClip(getClass().getResource("/sounds/callme.mp3").toString());
-        audioClip.play(0.4);
 
     }
 
@@ -153,7 +148,7 @@ public class ControllerGame1 extends Controller implements Initializable {
             case SPACE:
                 Sound sound=new Sound();
                 coinAnimation(progressBar.getProgress(), 1);
-                System.out.println(progressBar.getProgress());
+
                 if (progressBar.getProgress() >= 0.7 && progressBar.getProgress() <= 0.8) {
                     showMessage("hit", 1);
                     coins++;
@@ -164,9 +159,8 @@ public class ControllerGame1 extends Controller implements Initializable {
                 coinsValue.setText(String.valueOf(coins));
                 VBox_spaceBar.setVisible(false);
 
-                System.out.println("++++++ before send msg");
-                Session.getInstance().write(new Message (Type.COMUNICATION_LVL1, String.valueOf(progressBar.getProgress())));
-                System.out.println("+++++ after send msg");
+
+                Session.getInstance().write(new Message<String>(Type.COMUNICATION_LVL1, String.valueOf(progressBar.getProgress())));
 
 
         }

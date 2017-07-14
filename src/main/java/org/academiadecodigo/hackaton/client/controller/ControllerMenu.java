@@ -26,8 +26,6 @@ import java.util.regex.Pattern;
  */
 public class ControllerMenu extends Controller {
 
-
-    String username;
     boolean help;
     Message message;
 
@@ -68,7 +66,7 @@ public class ControllerMenu extends Controller {
     @FXML
     void submitToServer(ActionEvent event) {
 
-        username = inputText.getText();
+        String username = inputText.getText();
         Pattern pattern = Pattern.compile("[\\w]+");
         Matcher matcher = pattern.matcher(username);
 

@@ -37,7 +37,7 @@ public class ClientHandler implements Runnable {
                 try {
                     message = (Message) in.readObject();
 
-                    //processMsg(message.getType(), message.getContent());
+                    //gprocessMsg(message.getType(), message.getContent());
 
                     if (message != null && !socket.isClosed()) {
                         processMsg(message.getType(), message.getContent());
@@ -84,6 +84,9 @@ public class ClientHandler implements Runnable {
             case BEGIN:
                 writeMessage(new Message<String>(Type.BEGIN, Values.BEGIN));
                 break;
+
+            case COMUNICATION_LVL1:
+                server.sendToAll(socket, new Message<String>(type, msg));
         }
         //TODO rest of the process message
     }
