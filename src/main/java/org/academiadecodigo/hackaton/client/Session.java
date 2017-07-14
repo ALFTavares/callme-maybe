@@ -17,7 +17,7 @@ import java.net.SocketException;
 public class Session {
 
     private static Session instance;
-    private String ip;
+    private String ip = "localhost";
     private String username;
     private Socket socket;
     private ObjectOutputStream out;
