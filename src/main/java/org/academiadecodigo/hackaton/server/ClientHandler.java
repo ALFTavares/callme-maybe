@@ -18,6 +18,7 @@ import java.util.List;
 public class ClientHandler implements Runnable {
     private Server server;
     private Socket socket;
+    private String username;
 
     public ClientHandler(Server server, Socket socket) {
         this.server = server;
@@ -36,7 +37,13 @@ public class ClientHandler implements Runnable {
                 try {
                     message = (Message) in.readObject();
 
-                    processMsg(message.getType(), message.getContent());
+                    //processMsg(message.getType(), message.getContent());
+
+                    if (message != null && !socket.isClosed()) {
+                        processMsg(message.getType(), message.getContent());
+                    } else {
+                        server.removeFromMap(username);
+                    }
 
                 } catch (ClassNotFoundException e) {
                     e.printStackTrace();
@@ -51,7 +58,6 @@ public class ClientHandler implements Runnable {
     //process the msg received and send back msg to client
     private void processMsg(Type type, String msg) {
 
-        System.out.println(type);
         switch (type) {
             case LOGIN:
 
@@ -60,12 +66,13 @@ public class ClientHandler implements Runnable {
                     return;
                 }
 
+                username = msg;
                 writeMessage(new Message<String>(Type.LOGIN, Values.SUCCESS));
                 server.addToMap(msg, socket);
 
                 if (server.numPlayers() == 2) {
                     Message<String> message = new Message<>(Type.BEGIN, Values.BEGIN);
-                    server.sendToAll(null, new Message<String>(Type.BEGIN, Values.BEGIN));
+                    server.sendToAll(null, message);
                 }
 
                 break;

@@ -9,8 +9,8 @@ import org.academiadecodigo.hackaton.shared.Type;
  */
 public class GameService1 implements GameService {
 
-
-    ControllerGame1 controllerGame1;
+    private ControllerGame1 controllerGame1;
+    private int points;
 
     @Override
     public String getName() {
@@ -31,7 +31,7 @@ public class GameService1 implements GameService {
 
     @Override
     public void processMsg(Type type, String content) {
-
+        System.out.println("content" + content);
         switch (type){
 
             case COMUNICATION_LVL1:
@@ -41,4 +41,9 @@ public class GameService1 implements GameService {
                 controllerGame1.coinAnimation(coin, 2);
         }
     }
+
+    public void addPoints(int points) {
+        this.points = points * 100;
+    }
+
 }

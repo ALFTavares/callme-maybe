@@ -43,15 +43,23 @@ public class Server {
         int players = 0;
 
         while (players < 2) {
+
+            System.out.println("waiting for players");
+
             Socket socket = serverSocket.accept();
             objectOutputStreamMap.put(socket, new ObjectOutputStream(socket.getOutputStream()));
             executorService.submit(new ClientHandler(this, socket));
             players++;
         }
+        System.out.println("have all the players i need!");
     }
 
     public void addToMap(String name, Socket socket) {
         socketMap.put(name, socket);
+    }
+
+    public void removeFromMap(String s){
+        socketMap.remove(s);
     }
 
     public void sendToAll(Socket socket, Message message) {

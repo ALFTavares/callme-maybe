@@ -1,22 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.shape.Line?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
 <Pane fx:id="bgPane" onKeyPressed="#onKeyPressed" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.academiadecodigo.hackaton.client.controller.ControllerGame1">
    <children>
-      <GridPane fx:id="gridPane" prefHeight="600.0" prefWidth="800.0">
+      <GridPane fx:id="gridPane" prefHeight="600.0" prefWidth="800.0" styleClass="game1BG">
          <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="97.0" minWidth="10.0" prefWidth="100.0" />
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="97.0" minWidth="10.0" prefWidth="100.0" />
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="132.0" minWidth="10.0" prefWidth="81.0" />
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="103.0" minWidth="10.0" prefWidth="103.0" />
@@ -31,11 +36,39 @@
             <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <Text fx:id="timeText" strokeType="OUTSIDE" strokeWidth="0.0" text="Timer" GridPane.columnIndex="7" />
-            <Text fx:id="coinsValue" strokeType="OUTSIDE" strokeWidth="0.0" text="Coins" />
-            <ProgressBar fx:id="progressBar" minHeight="20.0" minWidth="340.0" prefWidth="249.0" progress="0.92" rotate="-90.0" translateX="-120.0" GridPane.rowIndex="3" />
-            <Line endX="-10.0" startX="-100.0" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
-            <Line endX="-20.0" startX="-100.0" translateY="39.0" GridPane.rowIndex="1" />
+            <Text fx:id="timeText" fill="#686868" strokeType="OUTSIDE" strokeWidth="0.0" text="Timer" GridPane.columnIndex="8">
+               <font>
+                  <Font size="20.0" />
+               </font></Text>
+            <Text fx:id="coinsValue" fill="#686868" strokeType="OUTSIDE" strokeWidth="0.0" text="Coins" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+               <font>
+                  <Font size="20.0" />
+               </font></Text>
+            <ProgressBar fx:id="progressBar" minHeight="20.0" minWidth="340.0" prefWidth="249.0" progress="0.8" rotate="-90.0" style="-fx-background-color: transparent;" translateX="-51.0" translateY="20.0" GridPane.rowIndex="3" />
+            <ImageView fitHeight="24.0" fitWidth="67.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="RIGHT" GridPane.valignment="CENTER">
+               <image>
+                  <Image url="@../images/goldcoin.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="27.0" fitWidth="68.0" pickOnBounds="true" preserveRatio="true" translateX="-8.0" GridPane.columnIndex="7" GridPane.halignment="RIGHT" GridPane.valignment="CENTER">
+               <image>
+                  <Image url="@../images/clock.png" />
+               </image>
+            </ImageView>
+            <VBox fx:id="VBox_spaceBar" alignment="CENTER" prefHeight="122.0" prefWidth="250.0" style="-fx-background-color: white;" GridPane.columnIndex="2" GridPane.columnSpan="5" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.rowSpan="2" GridPane.valignment="CENTER">
+               <children>
+                  <ImageView fitHeight="91.0" fitWidth="250.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/spacebar.png" />
+                     </image>
+                  </ImageView>
+                  <Text lineSpacing="17.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Press Space Bar" textAlignment="CENTER" textOrigin="TOP" VBox.vgrow="SOMETIMES">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Text>
+               </children>
+            </VBox>
          </children>
       </GridPane>
    </children>
