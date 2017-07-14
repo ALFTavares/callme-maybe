@@ -1,8 +1,5 @@
 package org.academiadecodigo.hackaton.server;
 
-
-import org.academiadecodigo.hackaton.client.Navigation;
-import org.academiadecodigo.hackaton.client.controller.ControllerGame1;
 import org.academiadecodigo.hackaton.shared.Message;
 import org.academiadecodigo.hackaton.shared.Score;
 import org.academiadecodigo.hackaton.shared.Type;
@@ -10,6 +7,7 @@ import org.academiadecodigo.hackaton.shared.Values;
 
 import java.io.*;
 import java.net.Socket;
+import java.net.SocketException;
 import java.util.List;
 
 /**
@@ -39,14 +37,17 @@ public class ClientHandler implements Runnable {
 
                     //processMsg(message.getType(), message.getContent());
 
-                    if (message != null && !socket.isClosed()) {
-                        processMsg(message.getType(), message.getContent());
-                    } else {
-                        server.removeFromMap(username);
-                    }
+                    //if (message != null && !socket.isClosed()) {
+                    processMsg(message.getType(), message.getContent());
+                    //} else {
+                    //}
 
                 } catch (ClassNotFoundException e) {
                     e.printStackTrace();
+                } catch (EOFException e) {
+                    server.removeFromMap(username);
+                } catch (SocketException e) {
+                    server.removeFromMap(username);
                 }
             }
 

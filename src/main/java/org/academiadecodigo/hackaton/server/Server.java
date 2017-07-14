@@ -39,27 +39,31 @@ public class Server {
 
     public void start() throws IOException {
         ExecutorService executorService = Executors.newCachedThreadPool();
-
         int players = 0;
-
         while (players < 2) {
-
-            System.out.println("waiting for players");
-
             Socket socket = serverSocket.accept();
             objectOutputStreamMap.put(socket, new ObjectOutputStream(socket.getOutputStream()));
             executorService.submit(new ClientHandler(this, socket));
             players++;
         }
-        System.out.println("have all the players i need!");
+        start();
     }
 
     public void addToMap(String name, Socket socket) {
         socketMap.put(name, socket);
     }
 
-    public void removeFromMap(String s){
-        socketMap.remove(s);
+    public void removeFromMap(String s) {
+        try {
+            objectOutputStreamMap.get(socketMap.get(s)).close();
+            objectOutputStreamMap.remove(socketMap.get(s));
+            socketMap.get(s).close();
+            socketMap.remove(s);
+            start();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     public void sendToAll(Socket socket, Message message) {

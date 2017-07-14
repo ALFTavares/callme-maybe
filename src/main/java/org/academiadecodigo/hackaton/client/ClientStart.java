@@ -9,6 +9,8 @@ import org.academiadecodigo.hackaton.client.service.game.GameService1;
 import org.academiadecodigo.hackaton.client.service.login.LoginServiceImpl;
 import org.academiadecodigo.hackaton.sound.Sound;
 
+import java.util.Scanner;
+
 /**
  * @author by André Martins <Code Cadet>
  *         Project stalkers (13/07/17)
@@ -17,6 +19,10 @@ import org.academiadecodigo.hackaton.sound.Sound;
 public class ClientStart extends Application {
 
     public static void main(String[] args) {
+        if(args.length >0) {
+            String ip = args[0];
+            Session.getInstance().setIP(ip);
+        }
         launch(args);
     }
 
