@@ -20,6 +20,7 @@ import org.academiadecodigo.hackaton.client.service.game.GameService;
 import org.academiadecodigo.hackaton.shared.Message;
 import org.academiadecodigo.hackaton.shared.Type;
 import org.academiadecodigo.hackaton.client.utils.Counter;
+import org.academiadecodigo.hackaton.sound.Sound;
 import sun.security.krb5.SCDynamicStoreConfig;
 
 import java.net.URL;
@@ -131,10 +132,14 @@ public class ControllerGame1 extends Controller implements Initializable {
         switch (event.getCode()) {
 
             case SPACE:
+                Sound sound=new Sound();
                 coinAnimation(progressBar.getProgress(), 1);
                 System.out.println(progressBar.getProgress());
                 if (progressBar.getProgress() >= 0.7 && progressBar.getProgress() <= 0.9) {
                     coins++;
+                    sound.startSound("/sounds/coin_water.mp3");
+                } else{
+                    sound.startSound("/sounds/coin_floor.mp3");
                 }
                 coinsValue.setText(String.valueOf(coins));
 
