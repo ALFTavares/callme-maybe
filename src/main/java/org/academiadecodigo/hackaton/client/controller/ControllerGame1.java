@@ -106,6 +106,7 @@ public class ControllerGame1 extends Controller implements Initializable {
                 Message message = Session.getInstance().read();
 
                 gameService.processMsg(message.getType(), message.getContent());
+                System.out.println("---- " + message.getType() + " " + message.getContent());
 
             }
         });
