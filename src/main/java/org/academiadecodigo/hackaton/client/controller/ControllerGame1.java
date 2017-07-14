@@ -90,7 +90,6 @@ public class ControllerGame1 extends Controller implements Initializable {
                 Message message = (Message) Session.getInstance().read();
 
                 gameService.processMsg(message.getType(), (String) message.getContent());
-                System.out.println("---- " + message.getType() + " " + message.getContent());
 
             }
         }).start();
@@ -170,6 +169,8 @@ public class ControllerGame1 extends Controller implements Initializable {
                     sound.startSound("/sounds/coin_floor.mp3");
                 }
                 coinsValue.setText(String.valueOf(coins));
+                VBox_spaceBar.setVisible(false);
+
 
                 Session.getInstance().write(new Message<String>(Type.COMUNICATION_LVL1, String.valueOf(progressBar.getProgress())));
 
