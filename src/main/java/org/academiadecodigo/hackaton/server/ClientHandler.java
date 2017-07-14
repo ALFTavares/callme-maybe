@@ -18,33 +18,23 @@ import java.util.List;
 public class ClientHandler implements Runnable {
     private Server server;
     private Socket socket;
-    private ObjectOutputStream out;
 
     public ClientHandler(Server server, Socket socket) {
         this.server = server;
         this.socket = socket;
-        try {
-            out = new ObjectOutputStream(socket.getOutputStream());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     //loop waiting for instructions
     public void run() {
 
-        System.out.println("aqui");
-
         try {
+
             ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
             Message<String> message;
 
             while (true) {
                 try {
                     message = (Message) in.readObject();
-
-                    System.out.println(message.getType());
-                    System.out.println(message.getContent());
 
                     processMsg(message.getType(), message.getContent());
 
@@ -61,6 +51,7 @@ public class ClientHandler implements Runnable {
     //process the msg received and send back msg to client
     private void processMsg(Type type, String msg) {
 
+        System.out.println(type);
         switch (type) {
             case LOGIN:
 
@@ -71,6 +62,12 @@ public class ClientHandler implements Runnable {
 
                 writeMessage(new Message<String>(Type.LOGIN, Values.SUCCESS));
                 server.addToMap(msg, socket);
+
+                if (server.numPlayers() == 2) {
+                    Message<String> message = new Message<>(Type.BEGIN, Values.BEGIN);
+                    server.sendToAll(null, new Message<String>(Type.BEGIN, Values.BEGIN));
+                }
+
                 break;
 
             case SCORELIST:
@@ -85,14 +82,7 @@ public class ClientHandler implements Runnable {
     }
 
     private void writeMessage(Message message) {
-        try {
-            out.writeObject(message);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        server.sendTo(socket, message);
     }
 
-    public void launchGame() {
-        processMsg(Type.BEGIN, "Here's my number");
-    }
 }

@@ -1,5 +1,7 @@
 package org.academiadecodigo.hackaton.server;
 
+import javafx.scene.shape.VLineTo;
+import org.academiadecodigo.hackaton.client.Session;
 import org.academiadecodigo.hackaton.shared.Message;
 import org.academiadecodigo.hackaton.shared.Score;
 import org.academiadecodigo.hackaton.shared.Type;
@@ -22,6 +24,7 @@ public class Server {
     private PersistenceHandler persistenceHandler;
     private ServerSocket serverSocket;
     private Map<String, Socket> socketMap;
+    private Map<Socket, ObjectOutputStream> objectOutputStreamMap;
 
     public Server() {
         try {
@@ -31,65 +34,43 @@ public class Server {
         }
         persistenceHandler = new PersistenceHandler(this);
         socketMap = new HashMap<>();
+        objectOutputStreamMap = new HashMap<>();
     }
 
     public void start() throws IOException {
         ExecutorService executorService = Executors.newCachedThreadPool();
-        while (true) {
+
+        int players = 0;
+
+        while (players < 2) {
             Socket socket = serverSocket.accept();
+            objectOutputStreamMap.put(socket, new ObjectOutputStream(socket.getOutputStream()));
             executorService.submit(new ClientHandler(this, socket));
+            players++;
         }
     }
 
     public void addToMap(String name, Socket socket) {
         socketMap.put(name, socket);
-        if (((socketMap.size() % 2) == 0) && socketMap.size() != 0) {
-            int i = 0;
-            while (i < 2) {
-                try {
-                    ObjectOutputStream out = new ObjectOutputStream(socketMap.get(name).getOutputStream());
-                    out.writeObject(new Message<String>(Type.BEGIN, Values.BEGIN));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                i++;
-            }
-        }
     }
 
     public void sendToAll(Socket socket, Message message) {
-        ObjectOutputStream out;
         for (Socket s : socketMap.values()) {
-            if (socket.equals(s)) {
+            if (s.equals(socket)) {
                 continue;
             }
-            try {
-                out = new ObjectOutputStream(s.getOutputStream());
-                out.writeObject(message);
-                out.flush();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            sendTo(s, message);
         }
     }
 
-    public void sendTo(String playerName, Message message) {
+    public void sendTo(Socket player, Message message) {
         try {
-            ObjectOutputStream out = new ObjectOutputStream(socketMap.get(playerName).getOutputStream());
+            ObjectOutputStream out = objectOutputStreamMap.get(player);
             out.writeObject(message);
             out.flush();
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    public void getMessageForPersistence(String message) {
-        //TODO change the method name in persistenceHandler after creation
-        //persistenceHandler.sendForQuery(message);
-    }
-
-    public Map getSocketMap() {
-        return socketMap;
     }
 
     public boolean checkName(String msg) {
@@ -98,5 +79,9 @@ public class Server {
 
     public List<Score> persistenceList() {
         return persistenceHandler.getHighScores();
+    }
+
+    public int numPlayers() {
+        return socketMap.size();
     }
 }

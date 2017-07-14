@@ -1,6 +1,7 @@
 package org.academiadecodigo.hackaton.client.controller;
 
 import javafx.animation.TranslateTransition;
+import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -77,7 +78,6 @@ public class ControllerGame1 extends Controller implements Initializable {
                 Message message = (Message) Session.getInstance().read();
 
                 gameService.processMsg(message.getType(), (String) message.getContent());
-                System.out.println("---- " + message.getType() + " " + message.getContent());
 
             }
         });
@@ -172,8 +172,12 @@ public class ControllerGame1 extends Controller implements Initializable {
                 if (upDown) {
                     progressBar.setProgress(progressBar.getProgress() - 0.01);
                 }
-
-                bgPane.requestFocus();
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        bgPane.requestFocus();
+                    }
+                });
 
             }
         }
