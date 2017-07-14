@@ -19,3 +19,26 @@
     -fx-text-box-border: transparent;
     -fx-control-inner-background: transparent;
 }
+
+.PaneBg{
+    -fx-background-image: url("/images/menu.jpg");
+    -fx-background-position: center;
+    -fx-background-size: cover;
+}
+
+.start_btn , .highScore_btn{
+    -fx-text-fill: black;
+    -fx-padding: 10px 20px;
+    -fx-background-color: transparent;
+    -fx-border-color: grey;
+    -fx-border-radius: 15;
+    -fx-font-family: "Courier New",monospace;
+}
+
+.start_btn:hover , .highScore_btn:hover{
+    -fx-background-color: grey;
+    -fx-text-fill: white;
+    -fx-border-radius: 15;
+    -fx-border-color: grey;
+    -fx-padding: 10px 20px;
+}
