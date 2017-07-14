@@ -81,9 +81,15 @@ public class ControllerGame1 extends Controller implements Initializable {
             @Override
             public void run() {
 
-                Message message = (Message) Session.getInstance().read();
+                while (true) {
+                    System.out.println("One more round");
+                    Message message = (Message) Session.getInstance().read();
+                    System.out.println(message);
+                    System.out.println(message.getType());
+                    System.out.println(message.getContent());
 
-                gameService.processMsg(message.getType(), (String) message.getContent());
+                    gameService.processMsg(message.getType(), (String) message.getContent());
+                }
 
             }
         }).start();
@@ -147,7 +153,7 @@ public class ControllerGame1 extends Controller implements Initializable {
             case SPACE:
                 Sound sound=new Sound();
                 coinAnimation(progressBar.getProgress(), 1);
-                System.out.println(progressBar.getProgress());
+
                 if (progressBar.getProgress() >= 0.7 && progressBar.getProgress() <= 0.8) {
                     showMessage("hit", 1);
                     coins++;

@@ -1,5 +1,6 @@
 package org.academiadecodigo.hackaton.client.service.game;
 
+import javafx.application.Platform;
 import org.academiadecodigo.hackaton.client.controller.Controller;
 import org.academiadecodigo.hackaton.client.controller.ControllerGame1;
 import org.academiadecodigo.hackaton.shared.Type;
@@ -18,7 +19,6 @@ public class GameService1 implements GameService {
 
     }
 
-
     @Override
     public void moveCoin(String string) {
         controllerGame1.coinAnimation(Integer.valueOf(string), 2);
@@ -36,9 +36,14 @@ public class GameService1 implements GameService {
 
             case COMUNICATION_LVL1:
 
-                double coin = Double.valueOf(content);
+                final double coin = Double.valueOf(content);
 
-                controllerGame1.coinAnimation(coin, 2);
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        controllerGame1.coinAnimation(coin, 2);
+                    }
+                });
         }
     }
 
