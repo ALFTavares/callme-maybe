@@ -19,7 +19,10 @@ import java.util.Scanner;
 public class ClientStart extends Application {
 
     public static void main(String[] args) {
-        String ip = args[0];
+        if (args.length > 0) {
+            String ip = args[0];
+            Session.getInstance().setIP(ip);
+        }
         launch(args);
     }
 
