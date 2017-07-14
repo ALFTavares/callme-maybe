@@ -34,6 +34,7 @@ public class Session {
             socket = new Socket("localhost", 9999);
             out = new ObjectOutputStream(socket.getOutputStream());
             in = new ObjectInputStream(socket.getInputStream());
+            System.out.println(in);
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -42,9 +43,11 @@ public class Session {
     }
 
     public void write(Message message) {
+        System.out.println("----++++++ Write Object Before");
         try {
             out.writeObject(message);
             out.flush();
+            System.out.println("-----+++++ Write Object after");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -52,11 +55,14 @@ public class Session {
 
     public Object read() {
 
-        Object message = null;
+        Message<String> message = null;
+        System.out.println("OOOOOOOOOON READ MSG");
 
         try {
 
-            message = in.readObject();
+            message = (Message<String>) in.readObject();
+            System.out.println("AFTER READ MSG");
+            System.out.println(message.getContent() + " " + message.getType());
 
         } catch (IOException e) {
             e.printStackTrace();

@@ -87,9 +87,15 @@ public class ControllerGame1 extends Controller implements Initializable {
             @Override
             public void run() {
 
-                Message message = (Message) Session.getInstance().read();
+                while (true) {
 
-                gameService.processMsg(message.getType(), (String) message.getContent());
+                    Message message = (Message) Session.getInstance().read();
+
+                    if (message == null) {
+                        continue;
+                    }
+
+                }
 
             }
         }).start();
@@ -171,8 +177,9 @@ public class ControllerGame1 extends Controller implements Initializable {
                 coinsValue.setText(String.valueOf(coins));
                 VBox_spaceBar.setVisible(false);
 
-
-                Session.getInstance().write(new Message<String>(Type.COMUNICATION_LVL1, String.valueOf(progressBar.getProgress())));
+                System.out.println("++++++ before send msg");
+                Session.getInstance().write(new Message (Type.COMUNICATION_LVL1, String.valueOf(progressBar.getProgress())));
+                System.out.println("+++++ after send msg");
 
 
         }
