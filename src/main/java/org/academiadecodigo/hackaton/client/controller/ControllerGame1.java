@@ -4,8 +4,6 @@ import javafx.animation.PauseTransition;
 import javafx.animation.SequentialTransition;
 import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
@@ -18,7 +16,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.scene.media.AudioClip;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 import org.academiadecodigo.hackaton.client.Navigation;
@@ -84,8 +81,6 @@ public class ControllerGame1 extends Controller implements Initializable {
         coinsValue.setText(String.valueOf(coins));
         coinsEnemyValue.setText(String.valueOf(enemyCoins));
 
-        new Thread(new ProgressBarChanger()).start();
-
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -107,6 +102,7 @@ public class ControllerGame1 extends Controller implements Initializable {
 
         final Timer timer = new Timer();
         timer.scheduleAtFixedRate(new Counter(30, timer, timeText), 0, 1000);
+        timer.scheduleAtFixedRate(new ProgressBarChanger(), 0, 5);
         new Thread(new CheckForTimeOut(timer)).start();
 
         Sound.getInstance().startSong();
@@ -192,44 +188,34 @@ public class ControllerGame1 extends Controller implements Initializable {
         seqTransition.play();
     }
 
-    private class ProgressBarChanger implements Runnable {
+    private class ProgressBarChanger extends TimerTask {
+
+        boolean upDown = false;
 
         @Override
         public void run() {
 
-            boolean upDown = false;
-
-            while (levelRun) {
-
-                try {
-                    Thread.sleep(5);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-
-                if (progressBar.getProgress() >= 1) {
-                    upDown = true;
-                }
-                if (progressBar.getProgress() <= 0.01) {
-                    upDown = false;
-                }
-
-                double padding = 0.01;
-
-                if (upDown) {
-                    padding = -padding;
-                }
-
-                final double finalPadding = padding;
-                Platform.runLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        progressBar.setProgress(progressBar.getProgress() + finalPadding);
-                        bgPane.requestFocus();
-                    }
-                });
-
+            if (progressBar.getProgress() >= 1) {
+                upDown = true;
             }
+            if (progressBar.getProgress() <= 0.01) {
+                upDown = false;
+            }
+
+            double padding = 0.01;
+
+            if (upDown) {
+                padding = -padding;
+            }
+
+            final double finalPadding = padding;
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    progressBar.setProgress(progressBar.getProgress() + finalPadding);
+                    bgPane.requestFocus();
+                }
+            });
         }
 
     }
@@ -267,7 +253,6 @@ public class ControllerGame1 extends Controller implements Initializable {
     }
 
     public void increase() {
-        System.out.println("cenas");
         enemyCoins++;
         coinsEnemyValue.setText(String.valueOf(enemyCoins));
     }
