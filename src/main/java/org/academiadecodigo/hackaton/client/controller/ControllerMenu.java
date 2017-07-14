@@ -84,6 +84,8 @@ public class ControllerMenu extends Controller {
             return;
         }
 
+        submitBtn.setDisable(true);
+
         while (true) {
 
             message = (Message) Session.getInstance().read();
