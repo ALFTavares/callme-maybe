@@ -99,4 +99,13 @@ public class Session {
         this.username = username;
     }
 
+    public void reset() {
+        try {
+            socket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        instance = null;
+    }
+
 }

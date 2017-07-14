@@ -42,7 +42,7 @@ public class Server {
 
         int players = 0;
 
-        while (players < 2) {
+        while (true) {
 
             System.out.println("waiting for players");
 
@@ -51,14 +51,14 @@ public class Server {
             executorService.submit(new ClientHandler(this, socket));
             players++;
         }
-        System.out.println("have all the players i need!");
+
     }
 
     public void addToMap(String name, Socket socket) {
         socketMap.put(name, socket);
     }
 
-    public void removeFromMap(String s){
+    public void removeFromMap(String s) {
         socketMap.remove(s);
     }
 

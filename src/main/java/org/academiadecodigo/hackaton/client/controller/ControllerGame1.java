@@ -60,8 +60,6 @@ public class ControllerGame1 extends Controller implements Initializable {
 
     private int coins = 0;
     private int enemyCoins = 0;
-    private boolean levelRun;
-    private boolean nextClick;
 
     //Player list
     private Map<Integer, Node> players = new HashMap<>();
@@ -72,7 +70,6 @@ public class ControllerGame1 extends Controller implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        levelRun = true;
         progressBar.setProgress(1);
 
         gameService = ServiceLocator.getInstance().get(GameService.class);
@@ -239,7 +236,6 @@ public class ControllerGame1 extends Controller implements Initializable {
                     }
                 }
 
-                levelRun = false;
                 gameService.addPoints(coins);
 
                 Platform.runLater(new Runnable() {
