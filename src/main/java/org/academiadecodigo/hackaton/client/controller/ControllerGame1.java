@@ -50,15 +50,19 @@ public class ControllerGame1 extends Controller implements Initializable {
     private Text timeText;
 
     @FXML
-    private Text coinsValue;
-
-    @FXML
     private ProgressBar progressBar;
 
     @FXML
     private VBox VBox_spaceBar;
 
+    @FXML
+    private Text coinsEnemyValue;
+
+    @FXML
+    private Text coinsValue;
+
     private int coins = 0;
+    private int enemyCoins = 0;
     private boolean levelRun;
     private boolean nextClick;
 
@@ -78,6 +82,7 @@ public class ControllerGame1 extends Controller implements Initializable {
         gameService.setController(this);
 
         coinsValue.setText(String.valueOf(coins));
+        coinsEnemyValue.setText(String.valueOf(enemyCoins));
 
         new Thread(new ProgressBarChanger()).start();
 
@@ -101,7 +106,7 @@ public class ControllerGame1 extends Controller implements Initializable {
         progressBar.requestFocus();
 
         final Timer timer = new Timer();
-        timer.scheduleAtFixedRate(new Counter(10, timer, timeText), 0, 1000);
+        timer.scheduleAtFixedRate(new Counter(30, timer, timeText), 0, 1000);
         new Thread(new CheckForTimeOut(timer)).start();
 
         Sound.getInstance().startSong();
@@ -257,11 +262,13 @@ public class ControllerGame1 extends Controller implements Initializable {
                         Navigation.getInstance().loadScreen("finalView");
                     }
                 });
-                // TODO next view
-
             }
         }
     }
 
-
+    public void increase() {
+        System.out.println("cenas");
+        enemyCoins++;
+        coinsEnemyValue.setText(String.valueOf(enemyCoins));
+    }
 }
