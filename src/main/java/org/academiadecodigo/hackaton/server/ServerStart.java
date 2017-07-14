@@ -10,6 +10,7 @@ import java.io.IOException;
 public class ServerStart {
     public static void main(String[] args) {
         Server server = new Server();
+
         try {
             PersistenceHandler persistenceHandler = new PersistenceHandler(server);
             persistenceHandler.updateScore(new Score("Hello", 50));

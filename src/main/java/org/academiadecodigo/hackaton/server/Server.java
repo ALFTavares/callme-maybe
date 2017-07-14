@@ -1,12 +1,9 @@
 package org.academiadecodigo.hackaton.server;
 
-import com.sun.corba.se.pept.encoding.OutputObject;
 import org.academiadecodigo.hackaton.shared.Message;
 import org.academiadecodigo.hackaton.shared.Score;
-import org.academiadecodigo.hackaton.shared.Type;
 
 import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -45,6 +42,9 @@ public class Server {
 
     public void addToMap(String name, Socket socket) {
         socketMap.put(name, socket);
+        if (((socketMap.size() % 2) == 0) && socketMap.size() != 0) {
+            clientHandler.launchGame();
+        }
     }
 
     public void sendToAll(Socket socket, Message message) {

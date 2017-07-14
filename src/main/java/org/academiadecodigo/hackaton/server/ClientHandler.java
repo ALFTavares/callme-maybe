@@ -1,11 +1,9 @@
 package org.academiadecodigo.hackaton.server;
 
-
 import org.academiadecodigo.hackaton.shared.Message;
 import org.academiadecodigo.hackaton.shared.Score;
 import org.academiadecodigo.hackaton.shared.Type;
 import org.academiadecodigo.hackaton.shared.Values;
-import sun.awt.SunHints;
 
 import java.io.*;
 import java.net.Socket;
@@ -28,7 +26,6 @@ public class ClientHandler implements Runnable {
             e.printStackTrace();
         }
     }
-
 
     //loop waiting for instructions
     public void run() {
@@ -56,7 +53,6 @@ public class ClientHandler implements Runnable {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
     //process the msg received and send back msg to client
@@ -77,6 +73,10 @@ public class ClientHandler implements Runnable {
             case SCORELIST:
                 writeMessage(new Message<List<Score>>(Type.SCORELIST, server.persistenceList()));
                 break;
+
+            case BEGIN:
+                writeMessage(new Message<String>(Type.BEGIN, Values.BEGIN));
+                break;
         }
         //TODO rest of the process message
     }
@@ -87,5 +87,9 @@ public class ClientHandler implements Runnable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void launchGame() {
+        processMsg(Type.BEGIN, "Here's my number");
     }
 }

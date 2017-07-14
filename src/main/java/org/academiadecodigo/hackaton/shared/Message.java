@@ -27,5 +27,4 @@ public class Message<T> implements Serializable {
     public T getContent() {
         return content;
     }
-
 }
