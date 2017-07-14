@@ -22,6 +22,7 @@ public class GameService1 implements GameService {
     @Override
     public void moveCoin(String string) {
         if (Double.parseDouble(string) >= 0.7 && Double.parseDouble(string) <= 0.8) {
+            controllerGame1.increase();
             enemyPoints++;
         }
 
@@ -35,7 +36,7 @@ public class GameService1 implements GameService {
     @Override
     public void processMsg(Type type, final String content) {
         System.out.println("content" + content);
-        switch (type){
+        switch (type) {
 
             case COMUNICATION_LVL1:
 
@@ -46,6 +47,7 @@ public class GameService1 implements GameService {
                     public void run() {
                         moveCoin(content);
                         controllerGame1.coinAnimation(coin, 2);
+
                     }
                 });
         }

@@ -40,12 +40,8 @@
                <font>
                   <Font size="20.0" />
                </font></Text>
-            <Text fx:id="coinsValue" fill="#686868" strokeType="OUTSIDE" strokeWidth="0.0" text="Coins" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
-               <font>
-                  <Font size="20.0" />
-               </font></Text>
             <ProgressBar fx:id="progressBar" minHeight="20.0" minWidth="340.0" prefWidth="249.0" progress="0.8" rotate="-90.0" style="-fx-background-color: transparent;" translateX="-51.0" translateY="20.0" GridPane.rowIndex="3" />
-            <ImageView fitHeight="24.0" fitWidth="67.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="RIGHT" GridPane.valignment="CENTER">
+            <ImageView fitHeight="24.0" fitWidth="67.0" pickOnBounds="true" preserveRatio="true" translateX="20.0" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                <image>
                   <Image url="@../images/goldcoin.png" />
                </image>
@@ -55,20 +51,35 @@
                   <Image url="@../images/clock.png" />
                </image>
             </ImageView>
-            <VBox fx:id="VBox_spaceBar" alignment="CENTER" prefHeight="122.0" prefWidth="250.0" style="-fx-background-color: white;" GridPane.columnIndex="2" GridPane.columnSpan="5" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.rowSpan="2" GridPane.valignment="CENTER">
+            <VBox fx:id="VBox_spaceBar" alignment="CENTER" prefHeight="122.0" prefWidth="250.0" styleClass="spaceBarBox" GridPane.columnIndex="2" GridPane.columnSpan="5" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.rowSpan="2" GridPane.valignment="CENTER">
                <children>
-                  <ImageView fitHeight="91.0" fitWidth="250.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="57.0" fitWidth="169.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../images/spacebar.png" />
                      </image>
                   </ImageView>
-                  <Text lineSpacing="17.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Press Space Bar" textAlignment="CENTER" textOrigin="TOP" VBox.vgrow="SOMETIMES">
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Press spacebar to throw coin ">
                      <font>
-                        <Font size="16.0" />
+                        <Font name="Courier New" size="18.0" />
                      </font>
                   </Text>
                </children>
             </VBox>
+            <ImageView fitHeight="24.0" fitWidth="67.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="LEFT" GridPane.valignment="CENTER">
+               <image>
+                  <Image url="@../images/goldEnemycoin.png" />
+               </image>
+            </ImageView>
+            <Text fx:id="coinsEnemyValue" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" translateX="-50.0" GridPane.columnIndex="3">
+               <font>
+                  <Font name="Courier New" size="20.0" />
+               </font>
+            </Text>
+            <Text fx:id="coinsValue" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" GridPane.columnIndex="1">
+               <font>
+                  <Font name="Courier New" size="20.0" />
+               </font>
+            </Text>
          </children>
       </GridPane>
    </children>

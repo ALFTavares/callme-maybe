@@ -61,3 +61,10 @@
     -fx-background-position: center;
     -fx-background-size: cover;
 }
+
+.spaceBarBox {
+    -fx-background-color: #7CB342;
+    -fx-background-insets: 10;
+    -fx-background-radius: 10;
+    -fx-effect: dropshadow(three-pass-box, purple, 10, 0, 0, 0);
+}
