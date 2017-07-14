@@ -57,6 +57,10 @@ public class Server {
         }
     }
 
+    public void removeFromMap(String s){
+        socketMap.remove(s);
+    }
+
     public void sendToAll(Socket socket, Message message) {
         ObjectOutputStream out;
         for (Socket s : socketMap.values()) {

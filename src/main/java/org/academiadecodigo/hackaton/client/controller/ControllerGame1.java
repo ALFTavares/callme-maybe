@@ -116,7 +116,8 @@ public class ControllerGame1 extends Controller implements Initializable {
         coinImage = new Image("/images/coin.png");
         coinView = new ImageView();
         coinView.setImage(coinImage);
-        coinView.setFitWidth(50);
+        coinView.setFitWidth(20);
+        coinView.setRotate(-90);
         coinView.setPreserveRatio(true);
         int playerRow = GridPane.getRowIndex(players.get(player));
         int playerColumn = GridPane.getColumnIndex(players.get(player));

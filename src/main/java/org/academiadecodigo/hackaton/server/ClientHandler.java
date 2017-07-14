@@ -19,6 +19,7 @@ public class ClientHandler implements Runnable {
     private Server server;
     private Socket socket;
     private ObjectOutputStream out;
+    private String username;
 
     public ClientHandler(Server server, Socket socket) {
         this.server = server;
@@ -46,7 +47,12 @@ public class ClientHandler implements Runnable {
                     System.out.println(message.getType());
                     System.out.println(message.getContent());
 
-                    processMsg(message.getType(), message.getContent());
+
+                    if(message != null && !socket.isClosed()) {
+                        processMsg(message.getType(), message.getContent());
+                    }else{
+                        server.removeFromMap(username);
+                    }
 
                 } catch (ClassNotFoundException e) {
                     e.printStackTrace();
@@ -69,6 +75,7 @@ public class ClientHandler implements Runnable {
                     return;
                 }
 
+                username=msg;
                 writeMessage(new Message<String>(Type.LOGIN, Values.SUCCESS));
                 server.addToMap(msg, socket);
                 break;
