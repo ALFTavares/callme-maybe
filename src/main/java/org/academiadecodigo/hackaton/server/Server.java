@@ -1,6 +1,7 @@
 package org.academiadecodigo.hackaton.server;
 
 import org.academiadecodigo.hackaton.shared.Message;
+import org.academiadecodigo.hackaton.shared.Score;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
@@ -16,7 +17,6 @@ import java.util.concurrent.Executors;
  * Created by bob on 13-07-2017.
  */
 public class Server {
-    private ClientHandler clientHandler;
     private PersistenceHandler persistenceHandler;
     private ServerSocket serverSocket;
     private Map<String, Socket> socketMap;
@@ -43,7 +43,8 @@ public class Server {
     public void addToMap(String name, Socket socket) {
         socketMap.put(name, socket);
         if (((socketMap.size() % 2) == 0) && socketMap.size() != 0) {
-            clientHandler.launchGame();
+            //clientHandler.launchGame();
+            // TODO fix this
         }
     }
 
@@ -86,7 +87,7 @@ public class Server {
         return socketMap.containsKey(msg);
     }
 
-    public List persistenceList() {
+    public List<Score> persistenceList() {
         return persistenceHandler.getHighScores();
     }
 }

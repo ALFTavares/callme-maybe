@@ -1,5 +1,7 @@
 package org.academiadecodigo.hackaton.server;
 
+import org.academiadecodigo.hackaton.shared.Score;
+
 import java.io.IOException;
 
 /**

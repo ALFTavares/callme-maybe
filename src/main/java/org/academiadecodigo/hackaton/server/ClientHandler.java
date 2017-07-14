@@ -1,6 +1,7 @@
 package org.academiadecodigo.hackaton.server;
 
 import org.academiadecodigo.hackaton.shared.Message;
+import org.academiadecodigo.hackaton.shared.Score;
 import org.academiadecodigo.hackaton.shared.Type;
 import org.academiadecodigo.hackaton.shared.Values;
 
@@ -70,7 +71,7 @@ public class ClientHandler implements Runnable {
                 break;
 
             case SCORELIST:
-                writeMessage(new Message<List>(Type.SCORELIST, server.persistenceList()));
+                writeMessage(new Message<List<Score>>(Type.SCORELIST, server.persistenceList()));
                 break;
 
             case BEGIN:

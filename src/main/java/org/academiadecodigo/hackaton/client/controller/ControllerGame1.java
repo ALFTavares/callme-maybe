@@ -13,6 +13,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
+import org.academiadecodigo.hackaton.client.utils.Counter;
 import sun.security.krb5.SCDynamicStoreConfig;
 
 import java.net.URL;
@@ -22,8 +23,6 @@ import java.util.*;
  * Created by codecadet on 13/07/17.
  */
 public class ControllerGame1 extends Controller implements Initializable {
-
-    private int coins;
 
     @FXML
     private Pane bgPane;
@@ -40,61 +39,31 @@ public class ControllerGame1 extends Controller implements Initializable {
     @FXML
     private ProgressBar progressBar;
 
+    private int coins;
+    private boolean runLevel;
+
     //Player list
-    Map<Integer, Node> players = new HashMap<>();
-    Image playerImage;
-    Image coinImage;
-    ImageView playerView;
-    ImageView coinView;
+    private Map<Integer, Node> players = new HashMap<>();
+    private Image playerImage;
+    private Image coinImage;
+    private ImageView playerView;
+    private ImageView coinView;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         progressBar.setProgress(1);
 
-
-       Thread thread= new Thread(new Runnable() {
-            @Override
-            public void run() {
-
-                boolean upDown = false;
-
-                while (true){
-
-                    try {
-                        Thread.sleep(5);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-
-                    if (progressBar.getProgress() >= 1){
-                        upDown = true;
-                    }
-                    if (progressBar.getProgress() <= 0.01){
-                        upDown = false;
-                    }
-
-                    if (!upDown){
-                        progressBar.setProgress(progressBar.getProgress() + 0.01);
-                    }
-                    if (upDown){
-                        progressBar.setProgress(progressBar.getProgress() - 0.01);
-                    }
-
-                    bgPane.requestFocus();
-
-
-                }
-            }
-        });
-
-       thread.start();
+        Thread thread = new Thread(new ProgressBarChanger());
+        thread.start();
 
         addPlayer();
-        coinAnimation(0.9);
 
         bgPane.requestFocus();
         progressBar.requestFocus();
-        System.out.println(progressBar.isFocused());
+
+        Timer timer = new Timer();
+        timer.scheduleAtFixedRate(new Counter(60, timer, timeText), 0, 1000);
+
     }
 
     private void addPlayer() {
@@ -116,28 +85,26 @@ public class ControllerGame1 extends Controller implements Initializable {
         coinView.setImage(coinImage);
         coinView.setFitWidth(50);
         coinView.setPreserveRatio(true);
-        int playerRow = gridPane.getRowIndex(players.get(1));
-        int playerColumn = gridPane.getColumnIndex(players.get(1));
+        int playerRow = GridPane.getRowIndex(players.get(1));
+        int playerColumn = GridPane.getColumnIndex(players.get(1));
         gridPane.add(coinView, playerColumn, playerRow);
         double finalValue = value * 500;
-        TranslateTransition tt = new TranslateTransition(Duration.millis(1000), coinView);
-        tt.setByY(coinView.getTranslateX() - finalValue);
-
-        tt.play();
-
+        TranslateTransition translateTransition = new TranslateTransition(Duration.millis(1000), coinView);
+        translateTransition.setByY(coinView.getTranslateX() - finalValue);
+        translateTransition.play();
 
     }
 
     @FXML
     public void onKeyPressed(KeyEvent event) {
 
-        switch (event.getCode()){
+        switch (event.getCode()) {
 
             case SPACE:
                 coinAnimation(progressBar.getProgress());
                 System.out.println(progressBar.getProgress());
-                if (progressBar.getProgress() >= 0.7 && progressBar.getProgress() <= 0.9){
-                coins++;
+                if (progressBar.getProgress() >= 0.7 && progressBar.getProgress() <= 0.9) {
+                    coins++;
                 }
                 coinsValue.setText(String.valueOf(coins));
         }
@@ -145,8 +112,40 @@ public class ControllerGame1 extends Controller implements Initializable {
 
     }
 
+    private class ProgressBarChanger implements Runnable {
 
+        @Override
+        public void run() {
 
+            boolean upDown = false;
 
+            while (true) {
+
+                try {
+                    Thread.sleep(5);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+                if (progressBar.getProgress() >= 1) {
+                    upDown = true;
+                }
+                if (progressBar.getProgress() <= 0.01) {
+                    upDown = false;
+                }
+
+                if (!upDown) {
+                    progressBar.setProgress(progressBar.getProgress() + 0.01);
+                }
+                if (upDown) {
+                    progressBar.setProgress(progressBar.getProgress() - 0.01);
+                }
+
+                bgPane.requestFocus();
+
+            }
+        }
+
+    }
 
 }

@@ -51,18 +51,15 @@ public class HibernateSessionManager {
         return sessionFactory.getCurrentSession();
     }
 
-
     // Required to stop hibernate and allow the application to terminate
     public void close() {
         sessionFactory.close();
     }
 
-
     public Session beginTransaction() {
         getSession().beginTransaction();
         return getSession();
     }
-
 
     public void commitTransaction() {
         getSession().getTransaction().commit();
