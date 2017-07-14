@@ -11,7 +11,7 @@
         </id>
 
         <property name="name" column="username" type="string"/>
-        <property name="score" column="score" type="int"/>
+        <property name="score" column="high_score" type="int"/>
 
     </class>
 

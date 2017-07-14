@@ -1,10 +1,15 @@
 package org.academiadecodigo.hackaton.client.service.login;
 
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import org.academiadecodigo.hackaton.client.Navigation;
 import org.academiadecodigo.hackaton.client.Session;
 import org.academiadecodigo.hackaton.shared.Message;
 import org.academiadecodigo.hackaton.shared.Type;
 import org.academiadecodigo.hackaton.shared.Values;
+import org.academiadecodigo.hackaton.sound.Sound;
+
+import java.io.File;
 
 /**
  * @author by André Martins <Code Cadet>
@@ -25,7 +30,7 @@ public class LoginServiceImpl implements LoginService {
         Message<String> message = (Message<String>) Session.getInstance().read();
 
         if (message.getType().equals(Type.LOGIN) && message.getContent().equals(Values.SUCCESS)) {
-            Navigation.getInstance().loadScreen("game1");
+            Session.getInstance().setUsername(username);
             return;
         }
 

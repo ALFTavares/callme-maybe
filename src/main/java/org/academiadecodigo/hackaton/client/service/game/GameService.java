@@ -9,8 +9,10 @@ import org.academiadecodigo.hackaton.shared.Type;
  */
 public interface GameService extends Service {
     void moveCoin(String string);
+
     void setController(Controller controller);
 
     void processMsg(Type type, String content);
+
     void addPoints(int points);
 }

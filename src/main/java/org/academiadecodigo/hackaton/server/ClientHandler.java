@@ -18,25 +18,18 @@ import java.util.List;
 public class ClientHandler implements Runnable {
     private Server server;
     private Socket socket;
-    private ObjectOutputStream out;
     private String username;
 
     public ClientHandler(Server server, Socket socket) {
         this.server = server;
         this.socket = socket;
-        try {
-            out = new ObjectOutputStream(socket.getOutputStream());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     //loop waiting for instructions
     public void run() {
 
-        System.out.println("aqui");
-
         try {
+
             ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
             Message<String> message;
 
@@ -44,13 +37,11 @@ public class ClientHandler implements Runnable {
                 try {
                     message = (Message) in.readObject();
 
-                    System.out.println(message.getType());
-                    System.out.println(message.getContent());
+                    //processMsg(message.getType(), message.getContent());
 
-
-                    if(message != null && !socket.isClosed()) {
+                    if (message != null && !socket.isClosed()) {
                         processMsg(message.getType(), message.getContent());
-                    }else{
+                    } else {
                         server.removeFromMap(username);
                     }
 
@@ -75,9 +66,15 @@ public class ClientHandler implements Runnable {
                     return;
                 }
 
-                username=msg;
+                username = msg;
                 writeMessage(new Message<String>(Type.LOGIN, Values.SUCCESS));
                 server.addToMap(msg, socket);
+
+                if (server.numPlayers() == 2) {
+                    Message<String> message = new Message<>(Type.BEGIN, Values.BEGIN);
+                    server.sendToAll(null, message);
+                }
+
                 break;
 
             case SCORELIST:
@@ -87,19 +84,15 @@ public class ClientHandler implements Runnable {
             case BEGIN:
                 writeMessage(new Message<String>(Type.BEGIN, Values.BEGIN));
                 break;
+
+            case COMUNICATION_LVL1:
+                server.sendToAll(socket, new Message<String>(type, msg));
         }
         //TODO rest of the process message
     }
 
     private void writeMessage(Message message) {
-        try {
-            out.writeObject(message);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        server.sendTo(socket, message);
     }
 
-    public void launchGame() {
-        processMsg(Type.BEGIN, "Here's my number");
-    }
 }

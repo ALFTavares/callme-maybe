@@ -21,7 +21,6 @@ public class Session {
     private Socket socket;
     private ObjectOutputStream out;
     private ObjectInputStream in;
-    private GameService gameService;
 
     private Session() {
         connect();
@@ -44,6 +43,7 @@ public class Session {
     public void write(Message message) {
         try {
             out.writeObject(message);
+            out.flush();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -95,15 +95,8 @@ public class Session {
 
     }
 
-
-    public void setGameService(GameService gameService) {
-        this.gameService = gameService;
-    }
-
     public void setUsername(String username) {
         this.username = username;
     }
-
-
 
 }

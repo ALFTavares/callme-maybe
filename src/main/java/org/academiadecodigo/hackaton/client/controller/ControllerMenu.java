@@ -1,14 +1,20 @@
 package org.academiadecodigo.hackaton.client.controller;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import org.academiadecodigo.hackaton.client.Navigation;
+import org.academiadecodigo.hackaton.client.Session;
 import org.academiadecodigo.hackaton.client.service.ServiceLocator;
 import org.academiadecodigo.hackaton.client.service.login.LoginService;
+import org.academiadecodigo.hackaton.shared.Message;
+import org.academiadecodigo.hackaton.shared.Values;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -19,6 +25,10 @@ import java.util.regex.Pattern;
  * Created by codecadet on 13/07/17.
  */
 public class ControllerMenu extends Controller {
+
+    boolean help;
+    Message message;
+
     @FXML
     private Pane menuPane;
 
@@ -34,11 +44,23 @@ public class ControllerMenu extends Controller {
     @FXML
     private Button submitBtn;
 
+    @FXML
+    private GridPane gridPane;
+
     private LoginService loginService;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         loginService = ServiceLocator.getInstance().<LoginService>get(LoginService.class);
+
+        menuPane.requestFocus();
+        gridPane.requestFocus();
+        inputText.requestFocus();
+    }
+
+    @FXML
+    void onRelease(KeyEvent event) {
+        userText.setText(inputText.getText());
     }
 
     @FXML
@@ -59,7 +81,25 @@ public class ControllerMenu extends Controller {
             loginService.submitNewClient(username);
         } catch (IllegalArgumentException e) {
             errorText.setText(e.getMessage());
+            return;
         }
+
+        while (true) {
+
+            message = (Message) Session.getInstance().read();
+
+            if (message == null) {
+                continue;
+            }
+
+            break;
+        }
+
+        if (message.getContent().equals(Values.BEGIN)) {
+            Navigation.getInstance().loadScreen("game1");
+            help = true;
+        }
+
     }
 
     @FXML
