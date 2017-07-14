@@ -15,4 +15,8 @@ public interface GameService extends Service {
     void processMsg(Type type, String content);
 
     void addPoints(int points);
+
+    int getPoints();
+
+    int getEnemyPoints();
 }
