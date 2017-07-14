@@ -1,5 +1,7 @@
 package org.academiadecodigo.hackaton.server;
 
+import org.academiadecodigo.hackaton.shared.Score;
+
 import java.io.IOException;
 
 /**
@@ -8,6 +10,7 @@ import java.io.IOException;
 public class ServerStart {
     public static void main(String[] args) {
         Server server = new Server();
+
         try {
             server.start();
         } catch (IOException e) {

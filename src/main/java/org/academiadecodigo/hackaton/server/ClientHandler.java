@@ -4,12 +4,13 @@ package org.academiadecodigo.hackaton.server;
 import org.academiadecodigo.hackaton.client.Navigation;
 import org.academiadecodigo.hackaton.client.controller.ControllerGame1;
 import org.academiadecodigo.hackaton.shared.Message;
+import org.academiadecodigo.hackaton.shared.Score;
 import org.academiadecodigo.hackaton.shared.Type;
 import org.academiadecodigo.hackaton.shared.Values;
-import sun.awt.SunHints;
 
 import java.io.*;
 import java.net.Socket;
+import java.util.List;
 
 /**
  * Created by bob on 13-07-2017.
@@ -29,7 +30,6 @@ public class ClientHandler implements Runnable {
         }
     }
 
-
     //loop waiting for instructions
     public void run() {
 
@@ -37,10 +37,11 @@ public class ClientHandler implements Runnable {
 
         try {
             ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
+            Message<String> message;
 
             while (true) {
                 try {
-                    Message message = (Message) in.readObject();
+                    message = (Message) in.readObject();
 
                     System.out.println(message.getType());
                     System.out.println(message.getContent());
@@ -55,25 +56,32 @@ public class ClientHandler implements Runnable {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
-    //process the msg received
+    //process the msg received and send back msg to client
     private void processMsg(Type type, String msg) {
 
         switch (type) {
             case LOGIN:
 
                 if (server.checkName(msg)) {
-                    writeMessage(new Message(Type.LOGIN, Values.UNSUCCESS));
+                    writeMessage(new Message<String>(Type.LOGIN, Values.UNSUCCESS));
                     return;
                 }
 
-                writeMessage(new Message(Type.LOGIN, Values.SUCCESS));
+                writeMessage(new Message<String>(Type.LOGIN, Values.SUCCESS));
                 server.addToMap(msg, socket);
+                break;
+
+            case SCORELIST:
+                writeMessage(new Message<List<Score>>(Type.SCORELIST, server.persistenceList()));
+                break;
+
+            case BEGIN:
+                writeMessage(new Message<String>(Type.BEGIN, Values.BEGIN));
+                break;
         }
         //TODO rest of the process message
-
     }
 
     private void writeMessage(Message message) {
@@ -82,5 +90,9 @@ public class ClientHandler implements Runnable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void launchGame() {
+        processMsg(Type.BEGIN, "Here's my number");
     }
 }

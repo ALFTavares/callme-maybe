@@ -1,20 +1,21 @@
 package org.academiadecodigo.hackaton.shared;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * @author by André Martins <Code Cadet>
  *         Project stalkers (13/07/17)
  *         <Academia de Código_>
  */
-public class Message implements Serializable {
+public class Message<T> implements Serializable {
 
     private static Long serialVersionUID = 10L;
 
     private Type type;
-    private String content;
+    private T content;
 
-    public Message(Type type, String content) {
+    public Message(Type type, T content) {
         this.type = type;
         this.content = content;
     }
@@ -23,8 +24,7 @@ public class Message implements Serializable {
         return type;
     }
 
-    public String getContent() {
+    public T getContent() {
         return content;
     }
-
 }
