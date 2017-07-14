@@ -30,25 +30,12 @@ public class LoginServiceImpl implements LoginService {
         Message<String> message = (Message<String>) Session.getInstance().read();
 
         if (message.getType().equals(Type.LOGIN) && message.getContent().equals(Values.SUCCESS)) {
+            Session.getInstance().setUsername(username);
             return;
         }
 
         throw new IllegalArgumentException("Existent user. Please try again.");
 
     }
-
-    /*
-    private void startSong() {
-
-        //Media media = new Media("resources/sounds/callme.wav");
-        //String uri = new File("/resources/sounds/callme.wav").toURI().toString();
-        //(System.out.println(uri);
-        Media media = new Media(getClass().getResource("/sounds/callme.mp3").toString());
-        System.out.println(media);
-        MediaPlayer mediaPlayer = new MediaPlayer(media);
-        mediaPlayer.play();
-
-    }
-    */
 
 }

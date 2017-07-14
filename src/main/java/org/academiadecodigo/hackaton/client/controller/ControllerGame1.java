@@ -4,6 +4,8 @@ import javafx.animation.PauseTransition;
 import javafx.animation.SequentialTransition;
 import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
@@ -57,6 +59,7 @@ public class ControllerGame1 extends Controller implements Initializable {
 
     private int coins = 0;
     private boolean levelRun;
+    private boolean nextClick;
 
     //Player list
     private Map<Integer, Node> players = new HashMap<>();
@@ -82,12 +85,7 @@ public class ControllerGame1 extends Controller implements Initializable {
             public void run() {
 
                 while (true) {
-                    System.out.println("One more round");
                     Message message = (Message) Session.getInstance().read();
-                    System.out.println(message);
-                    System.out.println(message.getType());
-                    System.out.println(message.getContent());
-
                     gameService.processMsg(message.getType(), (String) message.getContent());
                 }
 
@@ -104,9 +102,6 @@ public class ControllerGame1 extends Controller implements Initializable {
         final Timer timer = new Timer();
         timer.scheduleAtFixedRate(new Counter(60, timer, timeText), 0, 1000);
         new Thread(new CheckForTimeOut(timer)).start();
-
-        AudioClip audioClip=new AudioClip(getClass().getResource("/sounds/callme.mp3").toString());
-        audioClip.play(0.4);
 
     }
 
