@@ -39,20 +39,14 @@ public class Server {
 
     public void start() throws IOException {
         ExecutorService executorService = Executors.newCachedThreadPool();
-
         int players = 0;
-
         while (players < 2) {
-
-            System.out.println("waiting for players");
-
             Socket socket = serverSocket.accept();
             objectOutputStreamMap.put(socket, new ObjectOutputStream(socket.getOutputStream()));
             executorService.submit(new ClientHandler(this, socket));
             players++;
         }
         start();
-        System.out.println("have all the players i need!");
     }
 
     public void addToMap(String name, Socket socket) {

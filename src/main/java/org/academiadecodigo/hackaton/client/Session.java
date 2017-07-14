@@ -7,6 +7,7 @@ import org.academiadecodigo.hackaton.shared.Type;
 
 import java.io.*;
 import java.net.Socket;
+import java.net.SocketException;
 
 /**
  * @author by André Martins <Code Cadet>
@@ -16,7 +17,7 @@ import java.net.Socket;
 public class Session {
 
     private static Session instance;
-
+    private String ip;
     private String username;
     private Socket socket;
     private ObjectOutputStream out;
@@ -30,7 +31,7 @@ public class Session {
 
         try {
 
-            socket = new Socket("localhost", 9999);
+            socket = new Socket(ip, 9999);
             out = new ObjectOutputStream(socket.getOutputStream());
             in = new ObjectInputStream(socket.getInputStream());
 
@@ -58,7 +59,12 @@ public class Session {
             message = in.readObject();
 
         } catch (IOException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
+            try {
+                socket.close();
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
@@ -99,4 +105,7 @@ public class Session {
         this.username = username;
     }
 
+    public void setIP(String ip) {
+        this.ip = ip;
+    }
 }
