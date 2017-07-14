@@ -13,7 +13,6 @@ import org.academiadecodigo.hackaton.shared.Score;
 import org.academiadecodigo.hackaton.shared.Message;
 import org.academiadecodigo.hackaton.shared.Type;
 
-import java.io.ObjectInputStream;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -44,7 +43,7 @@ public class ControllerHighScores extends Controller {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        Session.getInstance().write(new Message<String>(Type.SCORELIST, ""));
+        Session.getInstance().write(new Message<String>(Type.SCORELIST, " "));
         Message<List<Score>> message = (Message<List<Score>>) Session.getInstance().read();
         ObservableList<Score> usersOList = FXCollections.observableList(message.getContent());
 

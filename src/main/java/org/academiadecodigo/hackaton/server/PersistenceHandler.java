@@ -88,8 +88,8 @@ public class PersistenceHandler {
         List<Score> list = null;
         try {
             Session session = HibernateSessionManager.getInstance().beginTransaction();
-
-            list = (List<Score>) session.createCriteria(Score.class).list();
+            Query query = session.createQuery("FROM Score ORDER BY score DESC");
+            list = query.list();
 
             HibernateSessionManager.getInstance().commitTransaction();
         } catch (HibernateException ex) {
