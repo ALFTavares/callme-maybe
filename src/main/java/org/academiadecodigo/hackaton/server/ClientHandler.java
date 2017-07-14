@@ -38,14 +38,14 @@ public class ClientHandler implements Runnable {
                     //processMsg(message.getType(), message.getContent());
 
                     //if (message != null && !socket.isClosed()) {
-                        processMsg(message.getType(), message.getContent());
+                    processMsg(message.getType(), message.getContent());
                     //} else {
                     //}
 
                 } catch (ClassNotFoundException e) {
                     e.printStackTrace();
                 } catch (EOFException e) {
-                        server.removeFromMap(username);
+                    server.removeFromMap(username);
                 } catch (SocketException e) {
                     server.removeFromMap(username);
                 }
