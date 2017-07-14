@@ -4,6 +4,8 @@ import javafx.animation.PauseTransition;
 import javafx.animation.SequentialTransition;
 import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
@@ -57,6 +59,7 @@ public class ControllerGame1 extends Controller implements Initializable {
 
     private int coins = 0;
     private boolean levelRun;
+    private boolean nextClick;
 
     //Player list
     private Map<Integer, Node> players = new HashMap<>();
@@ -81,9 +84,10 @@ public class ControllerGame1 extends Controller implements Initializable {
             @Override
             public void run() {
 
-                Message message = (Message) Session.getInstance().read();
-
-                gameService.processMsg(message.getType(), (String) message.getContent());
+                while (true) {
+                    Message message = (Message) Session.getInstance().read();
+                    gameService.processMsg(message.getType(), (String) message.getContent());
+                }
 
             }
         }).start();
@@ -145,7 +149,7 @@ public class ControllerGame1 extends Controller implements Initializable {
 
             case SPACE:
                 coinAnimation(progressBar.getProgress(), 1);
-                System.out.println(progressBar.getProgress());
+
                 if (progressBar.getProgress() >= 0.7 && progressBar.getProgress() <= 0.8) {
                     showMessage("hit", 1);
                     coins++;
