@@ -31,7 +31,7 @@ public class GameService1 implements GameService {
 
     @Override
     public void processMsg(Type type, String content) {
-
+        System.out.println("content" + content);
         switch (type){
 
             case COMUNICATION_LVL1:

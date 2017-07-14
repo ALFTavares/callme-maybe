@@ -1,17 +1,23 @@
 package org.academiadecodigo.hackaton.client.controller;
 
+import javafx.animation.PauseTransition;
+import javafx.animation.SequentialTransition;
 import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
+import javafx.scene.media.AudioClip;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.text.Text;
@@ -52,7 +58,10 @@ public class ControllerGame1 extends Controller implements Initializable {
     @FXML
     private ProgressBar progressBar;
 
-    private int coins;
+    @FXML
+    private VBox VBox_spaceBar;
+
+    private int coins = 0;
     private boolean levelRun;
 
     //Player list
@@ -69,6 +78,8 @@ public class ControllerGame1 extends Controller implements Initializable {
 
         gameService = ServiceLocator.getInstance().get(GameService.class);
         gameService.setController(this);
+
+        coinsValue.setText(String.valueOf(coins));
 
         new Thread(new ProgressBarChanger()).start();
 
@@ -95,10 +106,15 @@ public class ControllerGame1 extends Controller implements Initializable {
         timer.scheduleAtFixedRate(new Counter(60, timer, timeText), 0, 1000);
         new Thread(new CheckForTimeOut(timer)).start();
 
+        AudioClip audioClip=new AudioClip(getClass().getResource("/sounds/callme.mp3").toString());
+        audioClip.play(0.4);
+
+        /*
         Media media = new Media(getClass().getResource("/sounds/callme.mp3").toString());
         MediaPlayer mediaPlayer = new MediaPlayer(media);
         mediaPlayer.setVolume(0.4);
         mediaPlayer.play();
+        */
 
     }
 
@@ -146,7 +162,8 @@ public class ControllerGame1 extends Controller implements Initializable {
                 Sound sound=new Sound();
                 coinAnimation(progressBar.getProgress(), 1);
                 System.out.println(progressBar.getProgress());
-                if (progressBar.getProgress() >= 0.7 && progressBar.getProgress() <= 0.9) {
+                if (progressBar.getProgress() >= 0.7 && progressBar.getProgress() <= 0.8) {
+                    showMessage("hit", 1);
                     coins++;
                     sound.startSound("/sounds/coin_water.mp3");
                 } else{
@@ -158,6 +175,25 @@ public class ControllerGame1 extends Controller implements Initializable {
 
 
         }
+    }
+
+    private void showMessage(String message, int player) {
+        BorderPane messagePane = new BorderPane(new Text(message));
+        messagePane.setPadding(new Insets(5));
+        messagePane.setId("ModalMessage");
+        messagePane.setMaxHeight(20);
+        gridPane.add(messagePane, gridPane.getColumnIndex(players.get(player)), gridPane.getRowIndex(players.get(player)));
+        messagePane.setStyle("-fx-background-color: lawngreen;-fx-opacity: 0.8");
+        messagePane.setTranslateY(messagePane.getLayoutY() + 100);
+        messagePane.setTranslateX(messagePane.getLayoutX() + 50);
+        PauseTransition animationPause = new PauseTransition(Duration.millis(500));
+        PauseTransition delay = new PauseTransition(Duration.millis(1000));
+        TranslateTransition appearAnimation = new TranslateTransition(Duration.millis(300), messagePane);
+        appearAnimation.setByY(-130);
+        TranslateTransition dissapearAnimation = new TranslateTransition(Duration.millis(300), messagePane);
+        dissapearAnimation.setByY(100);
+        SequentialTransition seqTransition = new SequentialTransition(delay,appearAnimation, animationPause, dissapearAnimation);
+        seqTransition.play();
     }
 
     private class ProgressBarChanger implements Runnable {
