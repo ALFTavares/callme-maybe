@@ -4,7 +4,6 @@ import javafx.animation.PauseTransition;
 import javafx.animation.SequentialTransition;
 import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
@@ -18,20 +17,15 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.AudioClip;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
-import org.academiadecodigo.hackaton.client.Navigation;
 import org.academiadecodigo.hackaton.client.Session;
-import org.academiadecodigo.hackaton.client.service.Service;
 import org.academiadecodigo.hackaton.client.service.ServiceLocator;
 import org.academiadecodigo.hackaton.client.service.game.GameService;
 import org.academiadecodigo.hackaton.shared.Message;
 import org.academiadecodigo.hackaton.shared.Type;
 import org.academiadecodigo.hackaton.client.utils.Counter;
 import org.academiadecodigo.hackaton.sound.Sound;
-import sun.security.krb5.SCDynamicStoreConfig;
 
 import java.net.URL;
 import java.util.*;
@@ -108,13 +102,6 @@ public class ControllerGame1 extends Controller implements Initializable {
         AudioClip audioClip=new AudioClip(getClass().getResource("/sounds/callme.mp3").toString());
         audioClip.play(0.4);
 
-        /*
-        Media media = new Media(getClass().getResource("/sounds/callme.mp3").toString());
-        MediaPlayer mediaPlayer = new MediaPlayer(media);
-        mediaPlayer.setVolume(0.4);
-        mediaPlayer.play();
-        */
-
     }
 
     private void addPlayer(int col, int player) {
@@ -183,7 +170,7 @@ public class ControllerGame1 extends Controller implements Initializable {
         messagePane.setPadding(new Insets(5));
         messagePane.setId("ModalMessage");
         messagePane.setMaxHeight(20);
-        gridPane.add(messagePane, gridPane.getColumnIndex(players.get(player)), gridPane.getRowIndex(players.get(player)));
+        gridPane.add(messagePane, GridPane.getColumnIndex(players.get(player)), GridPane.getRowIndex(players.get(player)));
         messagePane.setStyle("-fx-background-color: lawngreen;-fx-opacity: 0.8");
         messagePane.setTranslateY(messagePane.getLayoutY() + 100);
         messagePane.setTranslateX(messagePane.getLayoutX() + 50);
@@ -261,12 +248,7 @@ public class ControllerGame1 extends Controller implements Initializable {
                 levelRun = false;
                 gameService.addPoints(coins);
 
-                /*Platform.runLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        Navigation.getInstance().loadScreen("menu");
-                    }
-                });*/
+                // TODO next view
 
             }
         }
