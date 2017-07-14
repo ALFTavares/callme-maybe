@@ -5,6 +5,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import org.academiadecodigo.hackaton.client.Navigation;
@@ -42,11 +44,23 @@ public class ControllerMenu extends Controller {
     @FXML
     private Button submitBtn;
 
+    @FXML
+    private GridPane gridPane;
+
     private LoginService loginService;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         loginService = ServiceLocator.getInstance().<LoginService>get(LoginService.class);
+
+        menuPane.requestFocus();
+        gridPane.requestFocus();
+        inputText.requestFocus();
+    }
+
+    @FXML
+    void onRelease(KeyEvent event) {
+        userText.setText(inputText.getText());
     }
 
     @FXML
