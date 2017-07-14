@@ -3,6 +3,7 @@ package org.academiadecodigo.hackaton.client.controller;
 import javafx.animation.PauseTransition;
 import javafx.animation.SequentialTransition;
 import javafx.animation.TranslateTransition;
+import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -18,6 +19,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
+import org.academiadecodigo.hackaton.client.Navigation;
 import org.academiadecodigo.hackaton.client.Session;
 import org.academiadecodigo.hackaton.client.service.Service;
 import org.academiadecodigo.hackaton.client.service.ServiceLocator;
@@ -56,7 +58,7 @@ public class ControllerGame1 extends Controller implements Initializable {
     private VBox VBox_spaceBar;
 
     private int coins = 0;
-    private boolean runLevel;
+    private boolean levelRun;
 
     //Player list
     private Map<Integer, Node> players = new HashMap<>();
@@ -67,6 +69,7 @@ public class ControllerGame1 extends Controller implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        levelRun = true;
         progressBar.setProgress(1);
 
         gameService = ServiceLocator.getInstance().get(GameService.class);
@@ -74,14 +77,11 @@ public class ControllerGame1 extends Controller implements Initializable {
 
         coinsValue.setText(String.valueOf(coins));
 
-        Thread thread = new Thread(new ProgressBarChanger());
-        thread.start();
+        new Thread(new ProgressBarChanger()).start();
 
-
-        Thread thread2 = new Thread(new Runnable() {
+        new Thread(new Runnable() {
             @Override
             public void run() {
-
 
                 Message message = (Message) Session.getInstance().read();
 
@@ -89,23 +89,23 @@ public class ControllerGame1 extends Controller implements Initializable {
                 System.out.println("---- " + message.getType() + " " + message.getContent());
 
             }
-        });
-
-        thread2.start();
+        }).start();
 
 
-        addPlayer(3, 6, 1);
-        addPlayer(6, 6, 2);
+        addPlayer(3,1);
+        addPlayer(6,2);
 
         bgPane.requestFocus();
         progressBar.requestFocus();
 
-        Timer timer = new Timer();
+        final Timer timer = new Timer();
         timer.scheduleAtFixedRate(new Counter(60, timer, timeText), 0, 1000);
+        new Thread(new CheckForTimeOut(timer)).start();
 
     }
 
-    private void addPlayer(int col, int row, int player) {
+    private void addPlayer(int col, int player) {
+        int row = 6;
         playerImage = new Image("/images/profile1.png");
         playerView = new ImageView();
         playerView.setImage(playerImage);
@@ -119,14 +119,18 @@ public class ControllerGame1 extends Controller implements Initializable {
 
     public void coinAnimation(double value, int player) {
 
-        coinImage = new Image("/images/goldcoin_final.gif");
+        if (coinImage != null) {
+            gridPane.getChildren().removeAll(coinView);
+        }
+
+        coinImage = new Image("/images/coin.png");
         coinView = new ImageView();
         coinView.setImage(coinImage);
         coinView.setFitWidth(20);
         coinView.setRotate(-90);
         coinView.setPreserveRatio(true);
-        int playerRow = gridPane.getRowIndex(players.get(player));
-        int playerColumn = gridPane.getColumnIndex(players.get(player));
+        int playerRow = GridPane.getRowIndex(players.get(player));
+        int playerColumn = GridPane.getColumnIndex(players.get(player));
         gridPane.add(coinView, playerColumn, playerRow);
         double finalValue = value * 500;
         TranslateTransition translateTransition = new TranslateTransition(Duration.millis(1000), coinView);
@@ -141,7 +145,6 @@ public class ControllerGame1 extends Controller implements Initializable {
         switch (event.getCode()) {
 
             case SPACE:
-                VBox_spaceBar.setVisible(false);
                 coinAnimation(progressBar.getProgress(), 1);
                 System.out.println(progressBar.getProgress());
                 if (progressBar.getProgress() >= 0.7 && progressBar.getProgress() <= 0.8) {
@@ -150,7 +153,7 @@ public class ControllerGame1 extends Controller implements Initializable {
                 }
                 coinsValue.setText(String.valueOf(coins));
 
-                Session.getInstance().write(new Message(Type.COMUNICATION_LVL1, String.valueOf(progressBar.getProgress())));
+                Session.getInstance().write(new Message<String>(Type.COMUNICATION_LVL1, String.valueOf(progressBar.getProgress())));
 
 
         }
@@ -182,7 +185,7 @@ public class ControllerGame1 extends Controller implements Initializable {
 
             boolean upDown = false;
 
-            while (true) {
+            while (levelRun) {
 
                 try {
                     Thread.sleep(5);
@@ -197,18 +200,57 @@ public class ControllerGame1 extends Controller implements Initializable {
                     upDown = false;
                 }
 
-                if (!upDown) {
-                    progressBar.setProgress(progressBar.getProgress() + 0.01);
-                }
+                double padding = 0.01;
+
                 if (upDown) {
-                    progressBar.setProgress(progressBar.getProgress() - 0.01);
+                    padding = -padding;
                 }
 
-                bgPane.requestFocus();
+                final double finalPadding = padding;
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        progressBar.setProgress(progressBar.getProgress() + finalPadding);
+                        bgPane.requestFocus();
+                    }
+                });
 
             }
         }
 
+    }
+
+    private class CheckForTimeOut implements Runnable {
+        private final Timer timer;
+
+        public CheckForTimeOut(Timer timer) {
+            this.timer = timer;
+        }
+
+        @Override
+        public void run() {
+            synchronized (timer) {
+
+                while (!timeText.getText().equals("0")) {
+                    try {
+                        timer.wait();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                levelRun = false;
+                gameService.addPoints(coins);
+
+                /*Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        Navigation.getInstance().loadScreen("menu");
+                    }
+                });*/
+
+            }
+        }
     }
 
 }
