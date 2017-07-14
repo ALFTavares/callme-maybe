@@ -21,7 +21,6 @@ public class Session {
     private Socket socket;
     private ObjectOutputStream out;
     private ObjectInputStream in;
-    private GameService gameService;
 
     private Session() {
         connect();
@@ -94,10 +93,6 @@ public class Session {
 
         return instance;
 
-    }
-
-    public void setGameService(GameService gameService) {
-        this.gameService = gameService;
     }
 
     public void setUsername(String username) {

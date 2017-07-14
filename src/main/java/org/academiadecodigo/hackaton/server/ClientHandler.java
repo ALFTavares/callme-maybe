@@ -84,6 +84,9 @@ public class ClientHandler implements Runnable {
             case BEGIN:
                 writeMessage(new Message<String>(Type.BEGIN, Values.BEGIN));
                 break;
+
+            case COMUNICATION_LVL1:
+                server.sendToAll(socket, new Message<String>(type, msg));
         }
         //TODO rest of the process message
     }

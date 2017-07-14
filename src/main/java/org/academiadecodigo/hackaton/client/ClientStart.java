@@ -1,11 +1,13 @@
 package org.academiadecodigo.hackaton.client;
 
 import javafx.application.Application;
+import javafx.scene.media.AudioClip;
 import javafx.stage.Stage;
 import org.academiadecodigo.hackaton.client.service.ServiceLocator;
 import org.academiadecodigo.hackaton.client.service.game.GameService;
 import org.academiadecodigo.hackaton.client.service.game.GameService1;
 import org.academiadecodigo.hackaton.client.service.login.LoginServiceImpl;
+import org.academiadecodigo.hackaton.sound.Sound;
 
 /**
  * @author by André Martins <Code Cadet>
@@ -21,7 +23,6 @@ public class ClientStart extends Application {
     @Override
     public void init() throws Exception {
 
-
         ServiceLocator.getInstance().add(new LoginServiceImpl());
         ServiceLocator.getInstance().add(new GameService1());
 
@@ -31,6 +32,7 @@ public class ClientStart extends Application {
     public void stop() throws Exception {
         Session.getInstance().close();
         Navigation.getInstance().close();
+        Sound.getInstance().stopSong();
     }
 
     @Override
