@@ -1,16 +1,17 @@
-.game1BG{
+.game1BG {
     -fx-background-image: url("/images/game1BG.jpg");
     -fx-background-position: center;
     -fx-background-size: cover;
 }
 
-.progress-bar { -fx-box-border: goldenrod; }
+.progress-bar {
+    -fx-box-border: goldenrod;
+}
 
 .progress-bar .bar {
-    -fx-background-color:
-            -fx-box-border,
-            linear-gradient(to bottom, derive(-fx-accent,95%), derive(-fx-accent,10%)),
-            #00796B; /* this line is the background color of the bar */
+    -fx-background-color: -fx-box-border,
+    linear-gradient(to bottom, derive(-fx-accent, 95%), derive(-fx-accent, 10%)),
+    #00796B; /* this line is the background color of the bar */
     -fx-background-insets: 0, 1, 2;
     -fx-padding: 0.416667em; /* 5 */
 }
@@ -20,22 +21,22 @@
     -fx-control-inner-background: transparent;
 }
 
-.PaneBg{
+.PaneBg {
     -fx-background-image: url("/images/menu.jpg");
     -fx-background-position: center;
     -fx-background-size: cover;
 }
 
-.start_btn , .highScore_btn{
+.start_btn, .highScore_btn {
     -fx-text-fill: black;
     -fx-padding: 10px 20px;
     -fx-background-color: transparent;
     -fx-border-color: grey;
     -fx-border-radius: 15;
-    -fx-font-family: "Courier New",monospace;
+    -fx-font-family: "Courier New", monospace;
 }
 
-.start_btn:hover , .highScore_btn:hover{
+.start_btn:hover, .highScore_btn:hover {
     -fx-background-color: grey;
     -fx-text-fill: white;
     -fx-border-radius: 15;
@@ -43,8 +44,20 @@
     -fx-padding: 10px 20px;
 }
 
-.highGridBg{
+.highGridBg {
     -fx-background-image: url("/images/highScoreBg.jpg");
+    -fx-background-position: center;
+    -fx-background-size: cover;
+}
+
+.winnerBg.lose {
+    -fx-background-image: url("/images/loser.jpg");
+    -fx-background-position: center;
+    -fx-background-size: cover;
+}
+
+.winnerBg.winner {
+    -fx-background-image: url("/images/winner.jpg");
     -fx-background-position: center;
     -fx-background-size: cover;
 }

@@ -12,16 +12,19 @@ public class GameService1 implements GameService {
 
     private ControllerGame1 controllerGame1;
     private int points;
+    private int enemyPoints;
 
     @Override
     public String getName() {
         return GameService.class.getSimpleName();
-
     }
 
     @Override
     public void moveCoin(String string) {
-        controllerGame1.coinAnimation(Integer.valueOf(string), 2);
+        if (Double.parseDouble(string) >= 0.7 && Double.parseDouble(string) <= 0.8) {
+            enemyPoints++;
+        }
+
     }
 
     @Override
@@ -30,7 +33,7 @@ public class GameService1 implements GameService {
     }
 
     @Override
-    public void processMsg(Type type, String content) {
+    public void processMsg(Type type, final String content) {
         System.out.println("content" + content);
         switch (type){
 
@@ -41,6 +44,7 @@ public class GameService1 implements GameService {
                 Platform.runLater(new Runnable() {
                     @Override
                     public void run() {
+                        moveCoin(content);
                         controllerGame1.coinAnimation(coin, 2);
                     }
                 });
@@ -48,7 +52,16 @@ public class GameService1 implements GameService {
     }
 
     public void addPoints(int points) {
-        this.points = points * 100;
+        this.points = points;
     }
 
+    @Override
+    public int getPoints() {
+        return points;
+    }
+
+    @Override
+    public int getEnemyPoints() {
+        return enemyPoints;
+    }
 }

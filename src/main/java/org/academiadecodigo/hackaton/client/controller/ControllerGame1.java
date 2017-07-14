@@ -21,6 +21,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.media.AudioClip;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
+import org.academiadecodigo.hackaton.client.Navigation;
 import org.academiadecodigo.hackaton.client.Session;
 import org.academiadecodigo.hackaton.client.service.ServiceLocator;
 import org.academiadecodigo.hackaton.client.service.game.GameService;
@@ -93,23 +94,23 @@ public class ControllerGame1 extends Controller implements Initializable {
         }).start();
 
 
-        addPlayer(3,1);
-        addPlayer(6,2);
+        addPlayer(3, 1, "/images/player1.png");
+        addPlayer(6, 2, "/images/player2.png");
 
         bgPane.requestFocus();
         progressBar.requestFocus();
 
         final Timer timer = new Timer();
-        timer.scheduleAtFixedRate(new Counter(60, timer, timeText), 0, 1000);
+        timer.scheduleAtFixedRate(new Counter(10, timer, timeText), 0, 1000);
         new Thread(new CheckForTimeOut(timer)).start();
 
         Sound.getInstance().startSong();
 
     }
 
-    private void addPlayer(int col, int player) {
+    private void addPlayer(int col, int player, String imageUrl) {
         int row = 6;
-        playerImage = new Image("/images/profile1.png");
+        playerImage = new Image(imageUrl);
         playerView = new ImageView();
         playerView.setImage(playerImage);
         playerView.setFitWidth(50);
@@ -154,7 +155,7 @@ public class ControllerGame1 extends Controller implements Initializable {
                     showMessage("hit", 1);
                     coins++;
                     Sound.getInstance().startSound("/sounds/coin_water.mp3");
-                } else{
+                } else {
                     Sound.getInstance().startSound("/sounds/coin_floor.mp3");
                 }
                 coinsValue.setText(String.valueOf(coins));
@@ -182,7 +183,7 @@ public class ControllerGame1 extends Controller implements Initializable {
         appearAnimation.setByY(-130);
         TranslateTransition dissapearAnimation = new TranslateTransition(Duration.millis(300), messagePane);
         dissapearAnimation.setByY(100);
-        SequentialTransition seqTransition = new SequentialTransition(delay,appearAnimation, animationPause, dissapearAnimation);
+        SequentialTransition seqTransition = new SequentialTransition(delay, appearAnimation, animationPause, dissapearAnimation);
         seqTransition.play();
     }
 
@@ -250,6 +251,12 @@ public class ControllerGame1 extends Controller implements Initializable {
                 levelRun = false;
                 gameService.addPoints(coins);
 
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        Navigation.getInstance().loadScreen("finalView");
+                    }
+                });
                 // TODO next view
 
             }
