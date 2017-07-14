@@ -1,5 +1,6 @@
 package org.academiadecodigo.hackaton.client.controller;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -9,8 +10,11 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import org.academiadecodigo.hackaton.client.Navigation;
+import org.academiadecodigo.hackaton.client.Session;
 import org.academiadecodigo.hackaton.client.service.ServiceLocator;
 import org.academiadecodigo.hackaton.client.service.login.LoginService;
+import org.academiadecodigo.hackaton.shared.Message;
+import org.academiadecodigo.hackaton.shared.Values;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -21,6 +25,12 @@ import java.util.regex.Pattern;
  * Created by codecadet on 13/07/17.
  */
 public class ControllerMenu extends Controller {
+
+
+    String username;
+    boolean help;
+    Message message;
+
     @FXML
     private Pane menuPane;
 
@@ -59,7 +69,7 @@ public class ControllerMenu extends Controller {
     @FXML
     void submitToServer(ActionEvent event) {
 
-        String username = inputText.getText();
+        username = inputText.getText();
         Pattern pattern = Pattern.compile("[\\w]+");
         Matcher matcher = pattern.matcher(username);
 
@@ -74,7 +84,25 @@ public class ControllerMenu extends Controller {
             loginService.submitNewClient(username);
         } catch (IllegalArgumentException e) {
             errorText.setText(e.getMessage());
+            return;
         }
+
+        while (true) {
+
+            message = (Message) Session.getInstance().read();
+
+            if (message == null) {
+                continue;
+            }
+
+            break;
+        }
+
+        if (message.getContent().equals(Values.BEGIN)) {
+            Navigation.getInstance().loadScreen("game1");
+            help = true;
+        }
+
     }
 
     @FXML
