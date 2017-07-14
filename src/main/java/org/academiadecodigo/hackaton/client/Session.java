@@ -59,12 +59,7 @@ public class Session {
             message = in.readObject();
 
         } catch (IOException e) {
-            //e.printStackTrace();
-            try {
-                socket.close();
-            } catch (IOException e1) {
-                e1.printStackTrace();
-            }
+            e.printStackTrace();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
@@ -103,6 +98,15 @@ public class Session {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public void reset() {
+        try {
+            socket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        instance = null;
     }
 
     public void setIP(String ip) {

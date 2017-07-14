@@ -30,8 +30,8 @@ public class ControllerFinal extends Controller {
     }
 
     @FXML
-    void restart(ActionEvent event) {
-        System.out.println("cens");
+    void restartGame(ActionEvent event) {
+        System.exit(1);
     }
 
 

@@ -27,7 +27,7 @@
     -fx-background-size: cover;
 }
 
-.start_btn, .highScore_btn {
+.start_btn, .highScore_btn, .btn_exit {
     -fx-text-fill: black;
     -fx-padding: 10px 20px;
     -fx-background-color: transparent;
@@ -36,12 +36,21 @@
     -fx-font-family: "Courier New", monospace;
 }
 
-.start_btn:hover, .highScore_btn:hover {
+.start_btn:hover, .highScore_btn:hover, .btn_exit:hover {
     -fx-background-color: grey;
     -fx-text-fill: white;
     -fx-border-radius: 15;
     -fx-border-color: grey;
     -fx-padding: 10px 20px;
+}
+
+.btn_exit {
+    -fx-background-color: rgba(117, 117, 117, 0.8);
+    -fx-text-fill: black;
+    -fx-padding: 10px 20px;
+    -fx-border-color: grey;
+    -fx-border-radius: 15;
+    -fx-font-family: "Courier New", monospace;
 }
 
 .highGridBg {
