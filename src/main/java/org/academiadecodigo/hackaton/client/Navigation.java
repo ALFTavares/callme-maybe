@@ -55,6 +55,8 @@ public class Navigation {
             FXMLLoader loader;
             loader = new FXMLLoader(getClass().getResource("/view/" + view + ".fxml"));
             Parent root = loader.load(); // load the view, instantiate the controller, call initialize
+            root.getStylesheets().add("/css/callMe.css");
+
             controllers.put(view, loader.<Controller>getController());
             controllers.get(view).setStage(stage);
 
@@ -71,7 +73,6 @@ public class Navigation {
     }
 
     public void setScene(Scene scene) {
-        System.out.println("enter");
         stage.setScene(scene);
         stage.show();
     }

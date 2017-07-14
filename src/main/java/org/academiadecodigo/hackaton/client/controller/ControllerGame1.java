@@ -80,10 +80,11 @@ public class ControllerGame1 extends Controller implements Initializable {
 
     private void coinAnimation(double value) {
 
-        coinImage = new Image("/images/coin.png");
+        coinImage = new Image("/images/goldcoin_final.gif");
         coinView = new ImageView();
         coinView.setImage(coinImage);
-        coinView.setFitWidth(50);
+        coinView.setFitWidth(20);
+        coinView.setRotate(-90);
         coinView.setPreserveRatio(true);
         int playerRow = GridPane.getRowIndex(players.get(1));
         int playerColumn = GridPane.getColumnIndex(players.get(1));

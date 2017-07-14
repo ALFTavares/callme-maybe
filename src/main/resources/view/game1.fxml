@@ -10,7 +10,7 @@
 
 <Pane fx:id="bgPane" onKeyPressed="#onKeyPressed" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.academiadecodigo.hackaton.client.controller.ControllerGame1">
    <children>
-      <GridPane fx:id="gridPane" prefHeight="600.0" prefWidth="800.0">
+      <GridPane fx:id="gridPane" prefHeight="600.0" prefWidth="800.0" styleClass="game1BG">
          <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -33,7 +33,7 @@
          <children>
             <Text fx:id="timeText" strokeType="OUTSIDE" strokeWidth="0.0" text="Timer" GridPane.columnIndex="7" />
             <Text fx:id="coinsValue" strokeType="OUTSIDE" strokeWidth="0.0" text="Coins" />
-            <ProgressBar fx:id="progressBar" minHeight="20.0" minWidth="340.0" prefWidth="249.0" progress="0.92" rotate="-90.0" translateX="-120.0" GridPane.rowIndex="3" />
+            <ProgressBar fx:id="progressBar" minHeight="20.0" minWidth="340.0" prefWidth="249.0" progress="0.92" rotate="-90.0" style="-fx-background-color: transparent;" translateX="-51.0" translateY="20.0" GridPane.rowIndex="3" />
             <Line endX="-10.0" startX="-100.0" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
             <Line endX="-20.0" startX="-100.0" translateY="39.0" GridPane.rowIndex="1" />
          </children>
