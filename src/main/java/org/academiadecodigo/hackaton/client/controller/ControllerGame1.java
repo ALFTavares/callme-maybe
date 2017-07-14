@@ -103,6 +103,8 @@ public class ControllerGame1 extends Controller implements Initializable {
         timer.scheduleAtFixedRate(new Counter(60, timer, timeText), 0, 1000);
         new Thread(new CheckForTimeOut(timer)).start();
 
+        Sound.getInstance().startSong();
+
     }
 
     private void addPlayer(int col, int player) {
@@ -146,15 +148,14 @@ public class ControllerGame1 extends Controller implements Initializable {
         switch (event.getCode()) {
 
             case SPACE:
-                Sound sound=new Sound();
                 coinAnimation(progressBar.getProgress(), 1);
 
                 if (progressBar.getProgress() >= 0.7 && progressBar.getProgress() <= 0.8) {
                     showMessage("hit", 1);
                     coins++;
-                    sound.startSound("/sounds/coin_water.mp3");
+                    Sound.getInstance().startSound("/sounds/coin_water.mp3");
                 } else{
-                    sound.startSound("/sounds/coin_floor.mp3");
+                    Sound.getInstance().startSound("/sounds/coin_floor.mp3");
                 }
                 coinsValue.setText(String.valueOf(coins));
                 VBox_spaceBar.setVisible(false);
