@@ -52,8 +52,7 @@ public class ControllerGame1 extends Controller implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         progressBar.setProgress(1);
 
-        Thread thread = new Thread(new ProgressBarChanger());
-        thread.start();
+        new Thread(new ProgressBarChanger()).start();
 
         addPlayer();
 
