@@ -4,8 +4,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
-import org.academiadecodigo.hackaton.client.Navigation;
-import org.academiadecodigo.hackaton.client.Session;
 import org.academiadecodigo.hackaton.client.service.ServiceLocator;
 import org.academiadecodigo.hackaton.client.service.game.GameService;
 
@@ -33,8 +31,7 @@ public class ControllerFinal extends Controller {
 
     @FXML
     void restartGame(ActionEvent event) {
-        Session.getInstance().reset();
-        Navigation.getInstance().loadScreen("menu");
+        System.exit(1);
     }
 
 

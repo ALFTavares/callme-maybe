@@ -7,6 +7,7 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.image.Image;
@@ -112,6 +113,7 @@ public class ControllerGame1 extends Controller implements Initializable {
         playerView = new ImageView();
         playerView.setImage(playerImage);
         playerView.setFitWidth(50);
+        gridPane.setAlignment(Pos.CENTER);
         playerView.setPreserveRatio(true);
 
         players.put(player, playerView);
