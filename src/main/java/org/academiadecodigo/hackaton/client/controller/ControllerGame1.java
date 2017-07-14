@@ -17,6 +17,9 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.AudioClip;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 import org.academiadecodigo.hackaton.client.Navigation;
@@ -27,6 +30,7 @@ import org.academiadecodigo.hackaton.client.service.game.GameService;
 import org.academiadecodigo.hackaton.shared.Message;
 import org.academiadecodigo.hackaton.shared.Type;
 import org.academiadecodigo.hackaton.client.utils.Counter;
+import org.academiadecodigo.hackaton.sound.Sound;
 import sun.security.krb5.SCDynamicStoreConfig;
 
 import java.net.URL;
@@ -101,6 +105,16 @@ public class ControllerGame1 extends Controller implements Initializable {
         timer.scheduleAtFixedRate(new Counter(60, timer, timeText), 0, 1000);
         new Thread(new CheckForTimeOut(timer)).start();
 
+        AudioClip audioClip=new AudioClip(getClass().getResource("/sounds/callme.mp3").toString());
+        audioClip.play(0.4);
+
+        /*
+        Media media = new Media(getClass().getResource("/sounds/callme.mp3").toString());
+        MediaPlayer mediaPlayer = new MediaPlayer(media);
+        mediaPlayer.setVolume(0.4);
+        mediaPlayer.play();
+        */
+
     }
 
     private void addPlayer(int col, int player) {
@@ -144,11 +158,15 @@ public class ControllerGame1 extends Controller implements Initializable {
         switch (event.getCode()) {
 
             case SPACE:
+                Sound sound=new Sound();
                 coinAnimation(progressBar.getProgress(), 1);
                 System.out.println(progressBar.getProgress());
                 if (progressBar.getProgress() >= 0.7 && progressBar.getProgress() <= 0.8) {
                     showMessage("hit", 1);
                     coins++;
+                    sound.startSound("/sounds/coin_water.mp3");
+                } else{
+                    sound.startSound("/sounds/coin_floor.mp3");
                 }
                 coinsValue.setText(String.valueOf(coins));
                 VBox_spaceBar.setVisible(false);

@@ -100,5 +100,4 @@ public class PersistenceHandler {
 
     //public User findByEmail(String email);
     //public String getName() { return UserService.class.getSimpleName(); }
-
 }
