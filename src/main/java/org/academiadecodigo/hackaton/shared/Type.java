@@ -10,6 +10,7 @@ public enum Type {
     LOGIN,
     SUCCESS,
     ERROR,
+    COMUNICATION_LVL1,
     SCORELIST,
     BEGIN
 
