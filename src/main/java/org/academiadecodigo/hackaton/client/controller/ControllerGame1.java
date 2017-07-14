@@ -40,7 +40,6 @@ public class ControllerGame1 extends Controller implements Initializable {
     private ProgressBar progressBar;
 
     private int coins;
-    private boolean runLevel;
 
     //Player list
     private Map<Integer, Node> players = new HashMap<>();
@@ -61,8 +60,27 @@ public class ControllerGame1 extends Controller implements Initializable {
         bgPane.requestFocus();
         progressBar.requestFocus();
 
-        Timer timer = new Timer();
-        timer.scheduleAtFixedRate(new Counter(60, timer, timeText), 0, 1000);
+        final Timer timer = new Timer();
+        timer.scheduleAtFixedRate(new Counter(10, timer, timeText), 0, 1000);
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                synchronized (timer) {
+
+                    while (!timeText.getText().equals("0")) {
+                        try {
+                            timer.wait();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    System.exit(0);
+
+                }
+            }
+        }).start();
 
     }
 

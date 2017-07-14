@@ -24,9 +24,12 @@ public class Counter extends TimerTask {
 
     @Override
     public void run() {
-        timeText.setText("" + timeToCount--);
-        if (timeToCount < 0) {
-            timer.cancel();
+        synchronized (timer) {
+            timeText.setText("" + timeToCount--);
+            if (timeToCount < 0) {
+                timer.notifyAll();
+                timer.cancel();
+            }
         }
     }
 
