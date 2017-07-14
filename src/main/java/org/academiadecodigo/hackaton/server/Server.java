@@ -2,6 +2,8 @@ package org.academiadecodigo.hackaton.server;
 
 import org.academiadecodigo.hackaton.shared.Message;
 import org.academiadecodigo.hackaton.shared.Score;
+import org.academiadecodigo.hackaton.shared.Type;
+import org.academiadecodigo.hackaton.shared.Values;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
@@ -20,7 +22,6 @@ public class Server {
     private PersistenceHandler persistenceHandler;
     private ServerSocket serverSocket;
     private Map<String, Socket> socketMap;
-
 
     public Server() {
         try {
@@ -43,9 +44,21 @@ public class Server {
     public void addToMap(String name, Socket socket) {
         socketMap.put(name, socket);
         if (((socketMap.size() % 2) == 0) && socketMap.size() != 0) {
-            //clientHandler.launchGame();
-            // TODO fix this
+            int i = 0;
+            while (i < 2) {
+                try {
+                    ObjectOutputStream out = new ObjectOutputStream(socketMap.get(name).getOutputStream());
+                    out.writeObject(new Message<String>(Type.BEGIN, Values.BEGIN));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                i++;
+            }
         }
+    }
+
+    public void removeFromMap(String s){
+        socketMap.remove(s);
     }
 
     public void sendToAll(Socket socket, Message message) {

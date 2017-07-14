@@ -1,5 +1,6 @@
 package org.academiadecodigo.hackaton.client;
 
+import javafx.fxml.Initializable;
 import org.academiadecodigo.hackaton.client.controller.Controller;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -90,6 +91,10 @@ public class Navigation {
 
     public void close() {
         stage.close();
+    }
+
+    public Initializable getController(String view) {
+        return controllers.get(view);
     }
 
 }
