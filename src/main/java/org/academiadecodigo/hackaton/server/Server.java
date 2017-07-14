@@ -89,6 +89,9 @@ public class Server {
         return persistenceHandler.getHighScores();
     }
 
+    public int updateScore(String username, int score){
+        return persistenceHandler.updateScore(new Score(username,score));}
+
     public int numPlayers() {
         return socketMap.size();
     }

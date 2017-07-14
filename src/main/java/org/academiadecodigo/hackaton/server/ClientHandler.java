@@ -88,6 +88,10 @@ public class ClientHandler implements Runnable {
             case COMUNICATION_LVL1:
                 server.sendToAll(socket, new Message<String>(type, msg));
                 break;
+            case UPDATESCORE:
+                server.updateScore(username,Integer.parseInt(msg));
+                break;
+
         }
         //TODO rest of the process message
     }

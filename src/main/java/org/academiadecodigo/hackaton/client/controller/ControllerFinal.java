@@ -4,8 +4,12 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
+import org.academiadecodigo.hackaton.client.Navigation;
+import org.academiadecodigo.hackaton.client.Session;
 import org.academiadecodigo.hackaton.client.service.ServiceLocator;
 import org.academiadecodigo.hackaton.client.service.game.GameService;
+import org.academiadecodigo.hackaton.shared.Message;
+import org.academiadecodigo.hackaton.shared.Type;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -31,7 +35,7 @@ public class ControllerFinal extends Controller {
 
     @FXML
     void restart(ActionEvent event) {
-        System.out.println("cens");
+        Session.getInstance().write(new Message<String>(Type.UPDATESCORE, String.valueOf(gameService.getPoints())));
     }
 
 

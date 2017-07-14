@@ -12,6 +12,7 @@ public enum Type {
     ERROR,
     COMUNICATION_LVL1,
     SCORELIST,
-    BEGIN
+    BEGIN,
+    UPDATESCORE;
 
 }

@@ -18,8 +18,8 @@ public class PersistenceHandler {
     }
 
 
-    public void updateScore(Score score) {
-
+    public int updateScore(Score score) {
+        int hasupdated=0;
         try {
 
             Integer newscore = score.getScore();
@@ -29,15 +29,18 @@ public class PersistenceHandler {
             System.out.println("oldscore: " + oldscore);
             if (oldscore == null) {
                 session.save(score);
+                hasupdated=1;
             } else if (newscore > oldscore.getScore()) {
                 oldscore.setScore(newscore);
                 session.update(oldscore);
+                hasupdated=1;
                 //show user "you got a new high score!"
             }
             HibernateSessionManager.getInstance().commitTransaction();
         } catch (HibernateException e) {
             HibernateSessionManager.getInstance().rollBackTransaction();
         }
+        return hasupdated;
     }
 
 
