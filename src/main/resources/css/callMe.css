@@ -1,0 +1,21 @@
+.game1BG{
+    -fx-background-image: url("/images/game1BG.jpg");
+    -fx-background-position: center;
+    -fx-background-size: cover;
+}
+
+.progress-bar { -fx-box-border: goldenrod; }
+
+.progress-bar .bar {
+    -fx-background-color:
+            -fx-box-border,
+            linear-gradient(to bottom, derive(-fx-accent,95%), derive(-fx-accent,10%)),
+            #00796B; /* this line is the background color of the bar */
+    -fx-background-insets: 0, 1, 2;
+    -fx-padding: 0.416667em; /* 5 */
+}
+
+.progress-bar > .track {
+    -fx-text-box-border: transparent;
+    -fx-control-inner-background: transparent;
+}

@@ -12,4 +12,5 @@ public interface GameService extends Service {
     void setController(Controller controller);
 
     void processMsg(Type type, String content);
+    void addPoints(int points);
 }
